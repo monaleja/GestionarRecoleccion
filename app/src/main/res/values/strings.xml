@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">GestionarRecoleccion</string>
+    <!-- Strings de Activity Login -->
+    <string name="strUsuario">Digite su email</string>
+    <string name="strClave">Digite su clave</string>
+    <string name="strLogin">Iniciar Sesión</string>
+    <string name="strPie">© ColombiaSoftware</string>
+    <string name="strRecordarme">Recordarme</string>
+    <!-- Strings de Activity Login (Fin) -->
+</resources>

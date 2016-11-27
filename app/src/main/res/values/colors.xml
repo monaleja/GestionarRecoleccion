@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="colorFondoAplicacion" type="color">#F5F5F5</item>
+    <item name="colorFondoCabecera" type="color">#3F51B5</item>
+    <item name="colorFondoPie" type="color">#3F51B5</item>
+
     <item name="colorFondoFormulario" type="color">#FFFFFF</item>
-
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-
+    <item name="colorTextoBlanco" type="color">#FFFFFF</item>
+    <!--Colores MD-->
+    <item name="primary" type="color">#3F51B5</item>
+    <item name="primary_dark" type="color">#303F9F</item>
+    <item name="primary_light" type="color">#C5CAE9</item>
+    <item name="accent" type="color">#448AFF</item>
+    <item name="primary_text" type="color">#212121</item>
+    <item name="secondary_text" type="color">#727272</item>
+    <item name="icons" type="color">#FFFFFF</item>
+    <item name="divider" type="color">#B6B6B6</item>
 </resources>

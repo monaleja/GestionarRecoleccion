@@ -1,10 +1,15 @@
 <resources>
-    <string name="app_name">GestionarRecoleccion</string>
-    <!-- Strings de Activity Login -->
-    <string name="strUsuario">Digite su email</string>
+    <string name="app_name">Gestionar Recolección</string>
+
+    <string name="action_settings">Opciones</string>
+
+    <string name="strUsuario">Digite su usuario</string>
     <string name="strClave">Digite su clave</string>
-    <string name="strLogin">Iniciar Sesión</string>
+    <string name="strLogin">Ingresar</string>
+
     <string name="strPie">© ColombiaSoftware</string>
-    <string name="strRecordarme">Recordarme</string>
-    <!-- Strings de Activity Login (Fin) -->
+    <string name="title_activity_seleccionar_empresa">Seleccionar empresa</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_menu_aplicaciones">Menú de aplicaciones</string>
 </resources>

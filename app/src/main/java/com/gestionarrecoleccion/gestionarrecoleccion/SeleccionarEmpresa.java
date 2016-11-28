@@ -47,7 +47,7 @@ public class SeleccionarEmpresa extends ActionBarActivity {
             lvEmpresas = (ListView) findViewById(R.id.lvEmpresas);
             lvEmpresas.setAdapter(adapterEmpresaUsuario);
             setEventoTapEmpresa();
-            setEventoTapSostenidoEmpresa();
+            //setEventoTapSostenidoEmpresa();
 
         } catch (JSONException e) {
             Toast.makeText(getApplicationContext(), "Algo salio mal, por favor contactar con el área de soporte.", Toast.LENGTH_SHORT).show();
@@ -87,49 +87,48 @@ public class SeleccionarEmpresa extends ActionBarActivity {
                         empresa.getString("empresa_codigo"),
                         empresa.getString("empresa_nombre"),
                         empresa.getString("cencos_codigo"),
-                        empresa.getString("cencos_nombre"),
-                        empresa.getString("usuario_implementador")));
+                        empresa.getString("cencos_nombre")));
             } catch (JSONException e) {
                 Toast.makeText(getApplicationContext(), "Algo salio mal, por favor contactar con el área de soporte.", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    public void setEventoTapEmpresa()
-    {
+    public void setEventoTapEmpresa() {
         lvEmpresas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 pruebas = false;
                 final EmpresaUsuario empresa = (EmpresaUsuario) parent.getItemAtPosition(position);
-
-                if(empresa.getUsuarioImplementador().equalsIgnoreCase("SI")) {
-                    new AlertDialog.Builder(SeleccionarEmpresa.this)
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setTitle("Servidor de Pruebas")
-                            .setMessage("Desea ingresar a las aplicaciones en modo pruebas?")
-                            .setPositiveButton("SI", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    guardarDatosSesion(empresa,true);
-                                    goSeleccionarEmpresaToMenuAplicaciones(empresa);
-                                }
-
-                            })
-                            .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    guardarDatosSesion(empresa, false);
-                                    goSeleccionarEmpresaToMenuAplicaciones(empresa);
-                                }
-                            })
-                            .show();
-                }else{
-                    guardarDatosSesion(empresa, false);
-                    goSeleccionarEmpresaToMenuAplicaciones(empresa);
-                }
+                guardarDatosSesion(empresa, false);
+                goSeleccionarEmpresaToMenuAplicaciones(empresa);
             }
         });
+    }
+
+    public void guardarDatosSesion(EmpresaUsuario empresaUsuario,boolean pruebas)
+    {
+        SharedPreferences sharedPref = getSharedPreferences("DatosSesionRedetransMovil", Context.MODE_WORLD_READABLE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        editor.putString("usuarioCodigo", empresaUsuario.getUsuarioCodigo());
+        editor.putString("usuarioLogin", empresaUsuario.getUsuarioLogin());
+        editor.putString("empresaCodigo", empresaUsuario.getEmpresaCodigo());
+        editor.putString("empresaNombre", empresaUsuario.getEmpresaNombre());
+        editor.putString("cencosCodigo", empresaUsuario.getCencosCodigo());
+        editor.putString("cencosNombre", empresaUsuario.getCencosNombre());
+        editor.commit();
+    }
+
+    public void goSeleccionarEmpresaToMenuAplicaciones (EmpresaUsuario empresa){
+        Toast.makeText(getApplicationContext(), "Tap centro costo: "+empresa.getCencosNombre(), Toast.LENGTH_SHORT).show();
+        /*Intent intent = new Intent(SeleccionarEmpresa.this, MenuAplicaciones.class);
+
+        intent.putExtra("usuarioLogin", empresa.getUsuarioLogin());
+        intent.putExtra("usuarioEmpresa", empresa.getEmpresaNombre());
+        intent.putExtra("usuarioCencos", empresa.getCencosNombre());
+
+        startActivity(intent);*/
     }
 
     public void setEventoTapSostenidoEmpresa()
@@ -159,41 +158,5 @@ public class SeleccionarEmpresa extends ActionBarActivity {
                 return true;
             }
         });
-    }
-
-    public void guardarDatosSesion(EmpresaUsuario empresaUsuario,boolean pruebas)
-    {
-        SharedPreferences sharedPref = getSharedPreferences("DatosSesionRedetransMovil", Context.MODE_WORLD_READABLE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-
-        editor.putString("usuarioCodigo", empresaUsuario.getUsuarioCodigo());
-        editor.putString("usuarioLogin", empresaUsuario.getUsuarioLogin());
-        editor.putString("empresaCodigo", empresaUsuario.getEmpresaCodigo());
-        editor.putString("empresaNombre", empresaUsuario.getEmpresaNombre());
-        editor.putString("cencosCodigo", empresaUsuario.getCencosCodigo());
-        editor.putString("cencosNombre", empresaUsuario.getCencosNombre());
-
-        /*if(pruebas) {
-            editor.putString("usuarioIp", empresaUsuario.getUsuarioIpPruebas());
-            editor.putString("usuarioCodigoExterno", empresaUsuario.getUsuarioCodigoPruebas());
-        }else{
-            editor.putString("usuarioIp", empresaUsuario.getUsuarioIp());
-            editor.putString("usuarioCodigoExterno", empresaUsuario.getUsuarioCodigoExterno());
-        }
-        editor.putString("empresaLogin", empresaUsuario.getEmpresaLogin());
-        editor.putString("usuarioImplementador",empresaUsuario.getUsuarioImplementador());
-        */
-        editor.commit();
-    }
-
-    public void goSeleccionarEmpresaToMenuAplicaciones (EmpresaUsuario empresa){
-        /*Intent intent = new Intent(SeleccionarEmpresa.this, MenuAplicaciones.class);
-
-        intent.putExtra("usuarioLogin", empresa.getUsuarioLogin());
-        intent.putExtra("usuarioEmpresa", empresa.getEmpresaNombre());
-        intent.putExtra("usuarioCencos", empresa.getCencosNombre());
-
-        startActivity(intent);
-        */
     }
 }

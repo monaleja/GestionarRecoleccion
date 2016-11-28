@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.gestionarrecoleccion.gestionarrecoleccion.R;
@@ -15,27 +16,46 @@ import java.util.ArrayList;
 /**
  * Created by Alejandra on 27/11/2016
  */
-public class AdapterEmpresaUsuario extends ArrayAdapter<EmpresaUsuario> {
+public class AdapterEmpresaUsuario extends BaseAdapter {
+
+    private Context context;
+    private ArrayList<EmpresaUsuario> empresas;
 
     public AdapterEmpresaUsuario(Context context, ArrayList<EmpresaUsuario> empresas) {
-        super(context, 0, empresas);
+        this.context = context;
+        this.empresas = empresas;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        // Get the data item for this position
-        EmpresaUsuario empresa = getItem(position);
-        // Check if an existing view is being reused, otherwise inflate the view
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.listview_empresas, parent, false);
+    public int getCount() {
+        return empresas.size();
+    }
+
+    @Override
+    public Object getItem(int i) {
+        return empresas.get(i);
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return i;
+    }
+
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
+        if (view == null) {
+            view = LayoutInflater.from(context).inflate(R.layout.listview_empresas, viewGroup, false);
         }
-        // Lookup view for data population
-        TextView tvLvEmpresa = (TextView) convertView.findViewById(R.id.tvLvEmpresa);
-        TextView tvLvCencos = (TextView) convertView.findViewById(R.id.tvLvCencos);
-        // Populate the data into the template view using the data object
-        tvLvEmpresa.setText(empresa.getEmpresaNombre());
-        tvLvCencos.setText(empresa.getCencosNombre());
-        // Return the completed view to render on screen
-        return convertView;
+
+        EmpresaUsuario empresaActual = (EmpresaUsuario) getItem(i);
+
+        TextView tvLvEmpresa = (TextView) view.findViewById(R.id.tvLvEmpresa);
+        TextView tvLvCencos = (TextView) view.findViewById(R.id.tvLvCencos);
+
+        //tvLvEmpresa.setText(empresaActual.getEmpresaNombre());
+        tvLvEmpresa.setText(null);
+        tvLvCencos.setText(empresaActual.getCencosNombre());
+
+        return view;
     }
 }

@@ -12,17 +12,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.gestionarrecoleccion.gestionarrecoleccion.config.ConfigurarCliente;
+import com.gestionarrecoleccion.gestionarrecoleccion.utils.Miscelanea;
 import com.gestionarrecoleccion.gestionarrecoleccion.utils.RespuestaRest;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
-
 import cz.msebera.android.httpclient.Header;
 
 
@@ -30,11 +30,13 @@ public class Principal extends ActionBarActivity {
 
     EditText etUsuario;
     EditText etClave;
+    ListView lvEmpresas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        lvEmpresas = (ListView) findViewById(R.id.lvEmpresas);
         this.initComponents();
     }
 
@@ -45,8 +47,8 @@ public class Principal extends ActionBarActivity {
     }
 
     private void initComponents() {
+        Miscelanea.verificarConexion(this);
         validarSesion();
-
         /* Mantener fuente por defecto, ya que si se define el edittext de tipo password cambia la fuente del hint */
         etClave = (EditText) findViewById(R.id.etClave);
         etClave.setTypeface(Typeface.DEFAULT);
@@ -85,7 +87,6 @@ public class Principal extends ActionBarActivity {
         AsyncHttpClient cliente = new ConfigurarCliente(new AsyncHttpClient(), getApplicationContext()).getCliente();
 
         RequestParams requestParams = new RequestParams();
-        //requestParams.add("accion", "login");
         requestParams.add("usuario", etUsuario.getText().toString());
         requestParams.add("clave", etClave.getText().toString());
 
@@ -117,12 +118,12 @@ public class Principal extends ActionBarActivity {
 
     public void validarSesion()
     {
-        SharedPreferences sharedPref = getSharedPreferences("DatosSesionSilogtranMovil", Context.MODE_WORLD_READABLE);
+        SharedPreferences sharedPref = getSharedPreferences("DatosSesionRedetransMovil", Context.MODE_WORLD_READABLE);
 
         String usuarioLogin = sharedPref.getString("usuarioLogin", "");
         if(!usuarioLogin.equals("")){
             Intent intent = new Intent(Principal.this, Principal.class);
-            //Intent intent = new Intent(Login.this, MenuAplicaciones.class);
+            //Intent intent = new Intent(Principal.this, MenuAplicaciones.class);
             startActivity(intent);
         }
     }

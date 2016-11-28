@@ -8,7 +8,7 @@
     <string name="strLogin">Ingresar</string>
 
     <string name="strPie">© ColombiaSoftware</string>
-    <string name="title_activity_seleccionar_empresa">Seleccionar empresa</string>
+    <string name="title_activity_seleccionar_centrocosto">Seleccionar centro de costo</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_menu_aplicaciones">Menú de aplicaciones</string>

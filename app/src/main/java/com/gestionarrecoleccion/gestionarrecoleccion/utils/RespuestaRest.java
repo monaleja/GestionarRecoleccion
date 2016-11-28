@@ -14,6 +14,17 @@ public class RespuestaRest {
     public String respuesta;
     public boolean satisfactorio;
 
+    public RespuestaRest(JSONObject jsonObject)
+    {
+        try {
+            this.satisfactorio = jsonObject.getBoolean("satisfactorio");
+            this.respuesta = jsonObject.getString("respuesta");
+            this.mensaje = jsonObject.getString("mensaje");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     public boolean isSatisfactorio() {
         return satisfactorio;
     }
@@ -26,15 +37,27 @@ public class RespuestaRest {
         return mensaje;
     }
 
-    public RespuestaRest(JSONObject jsonObject)
-    {
+
+    public JSONArray getDataJsonArray() {
+        JSONArray dataJsonArray = null;
+
         try {
-            this.satisfactorio = jsonObject.getBoolean("satisfactorio");
-            this.respuesta = jsonObject.getString("respuesta");
-            this.mensaje = jsonObject.getString("mensaje");
+            dataJsonArray = new JSONArray(respuesta);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        return dataJsonArray;
     }
 
+    public JSONObject getDataJsonObject() {
+        JSONObject dataJsonObject = null;
+
+        try {
+            dataJsonObject = new JSONObject(respuesta);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return dataJsonObject;
+    }
 }

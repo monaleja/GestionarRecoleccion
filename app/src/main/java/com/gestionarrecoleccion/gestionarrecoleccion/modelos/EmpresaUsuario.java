@@ -13,9 +13,7 @@ public class EmpresaUsuario {
     public String cencosCodigo;
     public String cencosNombre;
 
-    public String usuarioImplementador;
-
-    public EmpresaUsuario(String usuarioCodigo, String usuarioCodigoExterno, String usuarioLogin, String empresaCodigo, String empresaNombre, String cencosCodigo, String cencosNombre) {
+    public EmpresaUsuario(String usuarioCodigo, String usuarioLogin, String empresaCodigo, String empresaNombre, String cencosCodigo, String cencosNombre) {
         this.usuarioCodigo = usuarioCodigo;
         this.usuarioLogin = usuarioLogin;
         this.empresaCodigo = empresaCodigo;
@@ -23,7 +21,6 @@ public class EmpresaUsuario {
         this.empresaNombre = empresaNombre;
         this.cencosCodigo = cencosCodigo;
         this.cencosNombre = cencosNombre;
-        this.usuarioImplementador = usuarioImplementador;
     }
 
     public String getUsuarioCodigo() {
@@ -72,13 +69,5 @@ public class EmpresaUsuario {
 
     public void setCencosNombre(String cencosNombre) {
         this.cencosNombre = cencosNombre;
-    }
-
-    public String getUsuarioImplementador() {
-        return usuarioImplementador;
-    }
-
-    public void setUsuarioImplementador(String usuarioImplementador) {
-        this.usuarioImplementador = usuarioImplementador;
     }
 }

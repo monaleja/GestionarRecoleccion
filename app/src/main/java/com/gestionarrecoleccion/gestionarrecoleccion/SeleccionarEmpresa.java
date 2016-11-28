@@ -43,7 +43,7 @@ public class SeleccionarEmpresa extends ActionBarActivity {
             empresasJson = new JSONArray(intent.getStringExtra("empresasJson"));
             poblarListaEmpresas();
 
-            AdapterEmpresaUsuario adapterEmpresaUsuario= new AdapterEmpresaUsuario(this, empresas);
+            AdapterEmpresaUsuario adapterEmpresaUsuario = new AdapterEmpresaUsuario(this, empresas);
             lvEmpresas = (ListView) findViewById(R.id.lvEmpresas);
             lvEmpresas.setAdapter(adapterEmpresaUsuario);
             setEventoTapEmpresa();

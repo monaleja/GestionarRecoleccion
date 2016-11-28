@@ -20,6 +20,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
@@ -92,12 +93,10 @@ public class Principal extends ActionBarActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 RespuestaRest respuestaRest = new RespuestaRest(response);
-
                 if(respuestaRest.satisfactorio){
                     Intent intent = new Intent(Principal.this, SeleccionarEmpresa.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("empresasJson", respuestaRest.respuesta);
-
                     startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), respuestaRest.mensaje, Toast.LENGTH_SHORT).show();
@@ -106,7 +105,7 @@ public class Principal extends ActionBarActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Toast.makeText(getApplicationContext(), "Algo salio malll, por favor contactar con el área de soporte.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Algo salio mal, por favor contactar con el área de soporte.", Toast.LENGTH_SHORT).show();
             }
 
             @Override

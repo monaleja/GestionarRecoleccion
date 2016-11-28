@@ -1,15 +1,30 @@
 package com.gestionarrecoleccion.gestionarrecoleccion.utils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
  * Created by Alejandra on 27/11/2016.
  */
+
 public class RespuestaRest {
-    public boolean satisfactorio;
-    public String respuesta;
+
     public String mensaje;
+    public String respuesta;
+    public boolean satisfactorio;
+
+    public boolean isSatisfactorio() {
+        return satisfactorio;
+    }
+
+    public String getRespuesta() {
+        return respuesta;
+    }
+
+    public String getMensaje() {
+        return mensaje;
+    }
 
     public RespuestaRest(JSONObject jsonObject)
     {
@@ -21,4 +36,5 @@ public class RespuestaRest {
             e.printStackTrace();
         }
     }
+
 }

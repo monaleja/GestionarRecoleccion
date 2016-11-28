@@ -118,7 +118,7 @@ public class Principal extends ActionBarActivity {
 
     public void validarSesion()
     {
-        SharedPreferences sharedPref = getSharedPreferences("DatosSesionRedetransMovil", Context.MODE_WORLD_READABLE);
+        SharedPreferences sharedPref = getSharedPreferences("DatosSesionRedetransMovil", Context.MODE_PRIVATE);
 
         String usuarioLogin = sharedPref.getString("usuarioLogin", "");
         if(!usuarioLogin.equals("")){

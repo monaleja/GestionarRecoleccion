@@ -24,7 +24,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 /**
- * Created by Alejandra on 27/11/2016.
+ * Created by Alejandra on 27/11/2016. :P :P :P
  */
 public class SeleccionarEmpresa extends ActionBarActivity {
 
@@ -41,13 +41,28 @@ public class SeleccionarEmpresa extends ActionBarActivity {
 
         try {
             empresasJson = new JSONArray(intent.getStringExtra("empresasJson"));
-            poblarListaEmpresas();
 
-            AdapterEmpresaUsuario adapterEmpresaUsuario = new AdapterEmpresaUsuario(this, empresas);
-            lvEmpresas = (ListView) findViewById(R.id.lvEmpresas);
-            lvEmpresas.setAdapter(adapterEmpresaUsuario);
-            setEventoTapEmpresa();
-            //setEventoTapSostenidoEmpresa();
+            if(empresasJson.length() > 1) {
+                poblarListaEmpresas();
+
+                AdapterEmpresaUsuario adapterEmpresaUsuario = new AdapterEmpresaUsuario(this, empresas);
+                lvEmpresas = (ListView) findViewById(R.id.lvEmpresas);
+                lvEmpresas.setAdapter(adapterEmpresaUsuario);
+                setEventoTapEmpresa();
+                //setEventoTapSostenidoEmpresa();
+            }else{
+                JSONObject empresa = empresasJson.getJSONObject(0);
+                EmpresaUsuario empresaUsuario = new EmpresaUsuario(
+                        empresa.getString("usuario_codigo"),
+                        empresa.getString("usuario_login"),
+                        empresa.getString("empresa_codigo"),
+                        empresa.getString("empresa_nombre"),
+                        empresa.getString("cencos_codigo"),
+                        empresa.getString("cencos_nombre"));
+
+                guardarDatosSesion(empresaUsuario, false);
+                goSeleccionarEmpresaToMenuAplicaciones(empresaUsuario);
+            }
 
         } catch (JSONException e) {
             Toast.makeText(getApplicationContext(), "Algo salio mal, por favor contactar con el área de soporte.", Toast.LENGTH_SHORT).show();
@@ -108,7 +123,7 @@ public class SeleccionarEmpresa extends ActionBarActivity {
 
     public void guardarDatosSesion(EmpresaUsuario empresaUsuario,boolean pruebas)
     {
-        SharedPreferences sharedPref = getSharedPreferences("DatosSesionRedetransMovil", Context.MODE_WORLD_READABLE);
+        SharedPreferences sharedPref = getSharedPreferences("DatosSesionRedetransMovil", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
 
         editor.putString("usuarioCodigo", empresaUsuario.getUsuarioCodigo());
@@ -121,7 +136,7 @@ public class SeleccionarEmpresa extends ActionBarActivity {
     }
 
     public void goSeleccionarEmpresaToMenuAplicaciones (EmpresaUsuario empresa){
-        Toast.makeText(getApplicationContext(), "Tap centro costo: "+empresa.getCencosNombre(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Tap centro costo: "+empresa.getCencosNombre(), Toast.LENGTH_LONG).show();
         /*Intent intent = new Intent(SeleccionarEmpresa.this, MenuAplicaciones.class);
 
         intent.putExtra("usuarioLogin", empresa.getUsuarioLogin());

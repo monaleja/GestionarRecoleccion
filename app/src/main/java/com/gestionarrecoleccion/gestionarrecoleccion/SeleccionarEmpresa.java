@@ -1,5 +1,8 @@
 package com.gestionarrecoleccion.gestionarrecoleccion;
 
+import android.app.ActionBar;
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,6 +35,7 @@ public class SeleccionarEmpresa extends ActionBarActivity {
     ArrayList<EmpresaUsuario> empresas = new ArrayList<EmpresaUsuario>();
     ListView lvEmpresas;
     boolean pruebas;
+    Dialog DialogAgregarNovedad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +141,8 @@ public class SeleccionarEmpresa extends ActionBarActivity {
 
     public void goSeleccionarEmpresaToMenuAplicaciones (EmpresaUsuario empresa){
         Toast.makeText(getApplicationContext(), "Tap centro costo: "+empresa.getCencosNombre(), Toast.LENGTH_LONG).show();
+        abrirDialogo(this);
+
         /*Intent intent = new Intent(SeleccionarEmpresa.this, MenuAplicaciones.class);
 
         intent.putExtra("usuarioLogin", empresa.getUsuarioLogin());
@@ -144,6 +150,13 @@ public class SeleccionarEmpresa extends ActionBarActivity {
         intent.putExtra("usuarioCencos", empresa.getCencosNombre());
 
         startActivity(intent);*/
+    }
+
+    public void abrirDialogo(Activity activity){
+        DialogAgregarNovedad = new Dialog(activity);
+        DialogAgregarNovedad.setContentView(R.layout.dialog_agregar_novedad);
+        DialogAgregarNovedad.getWindow().setLayout(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
+        DialogAgregarNovedad.show();
     }
 
     public void setEventoTapSostenidoEmpresa()

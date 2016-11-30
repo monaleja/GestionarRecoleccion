@@ -122,9 +122,9 @@ public class Principal extends ActionBarActivity {
 
         String usuarioLogin = sharedPref.getString("usuarioLogin", "");
         if(!usuarioLogin.equals("")){
-            Intent intent = new Intent(Principal.this, Principal.class);
+            //Intent intent = new Intent(Principal.this, Principal.class);
             //Intent intent = new Intent(Principal.this, MenuAplicaciones.class);
-            startActivity(intent);
+            //startActivity(intent);
         }
     }
 }

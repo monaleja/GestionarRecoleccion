@@ -141,15 +141,12 @@ public class SeleccionarEmpresa extends ActionBarActivity {
 
     public void goSeleccionarEmpresaToMenuAplicaciones (EmpresaUsuario empresa){
         Toast.makeText(getApplicationContext(), "Tap centro costo: "+empresa.getCencosNombre(), Toast.LENGTH_LONG).show();
-        abrirDialogo(this);
 
-        /*Intent intent = new Intent(SeleccionarEmpresa.this, MenuAplicaciones.class);
-
+        Intent intent = new Intent(SeleccionarEmpresa.this, ListaOrdenCargue.class);
         intent.putExtra("usuarioLogin", empresa.getUsuarioLogin());
-        intent.putExtra("usuarioEmpresa", empresa.getEmpresaNombre());
         intent.putExtra("usuarioCencos", empresa.getCencosNombre());
 
-        startActivity(intent);*/
+        startActivity(intent);
     }
 
     public void abrirDialogo(Activity activity){
@@ -157,34 +154,5 @@ public class SeleccionarEmpresa extends ActionBarActivity {
         DialogAgregarNovedad.setContentView(R.layout.dialog_agregar_novedad);
         DialogAgregarNovedad.getWindow().setLayout(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
         DialogAgregarNovedad.show();
-    }
-
-    public void setEventoTapSostenidoEmpresa()
-    {
-        lvEmpresas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                EmpresaUsuario empresa = (EmpresaUsuario) parent.getItemAtPosition(position);
-
-                /*if(empresa.getUsuarioLogin().equals("AOSPINA") || empresa.getUsuarioLogin().equals("JDCHICA") || empresa.getUsuarioLogin().equals("JCGOMEZ")){
-                    empresa.setUsuarioIp("181.48.247.202");
-                    Toast.makeText(getApplicationContext(), "Modo de pruebas activado.", Toast.LENGTH_LONG).show();
-                }*/
-
-                guardarDatosSesion(empresa,true);
-
-                /*Intent intent = new Intent(SeleccionarEmpresa.this, MenuAplicaciones.class);
-
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("usuarioLogin", empresa.getUsuarioLogin());
-                intent.putExtra("usuarioEmpresa", empresa.getEmpresaNombre());
-                intent.putExtra("usuarioCencos", empresa.getCencosNombre());
-
-                startActivity(intent);
-                */
-
-                return true;
-            }
-        });
     }
 }

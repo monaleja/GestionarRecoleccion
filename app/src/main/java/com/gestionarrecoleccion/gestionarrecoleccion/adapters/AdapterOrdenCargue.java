@@ -8,9 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.gestionarrecoleccion.gestionarrecoleccion.R;
-import com.gestionarrecoleccion.gestionarrecoleccion.entidades.OrdenCargueEntidad;
-
-import org.w3c.dom.Text;
+import com.gestionarrecoleccion.gestionarrecoleccion.modelos.OrdenCargueEntidad;
 
 import java.util.ArrayList;
 

@@ -24,38 +24,48 @@
             android:id="@+id/tvAgregarNovedad"
             android:layout_gravity="center"
             android:layout_weight="0.16"
-            tools:ignore="InefficientWeight" />
+            tools:ignore="InefficientWeight"
+            style="@style/tpmTitulo"
+            android:textSize="24dp" />
 
         <TextView
             android:text="Orden cargue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tvOrdenCargue" />
+            android:id="@+id/tvOrdenCargue"
+            style="@style/tpmEtiqueta"
+            android:textSize="20dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/tvOrdenCargueCodigo" />
+            android:id="@+id/tvOrdenCargueCodigo"
+            android:layout_weight="0.05"
+            android:textSize="20dp" />
 
         <TextView
             android:text="Tipo Novedad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tvTipoNovedad" />
+            android:id="@+id/tvTipoNovedad"
+            style="@style/tpmEtiqueta"
+            android:textSize="20dp" />
 
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.16"
+            android:layout_weight="0.06"
             android:id="@+id/spTipoNovedad"/>
 
         <TextView
             android:text="Observación"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tvObservacion" />
+            android:id="@+id/tvObservacion"
+            style="@style/tpmEtiqueta"
+            android:textSize="20dp" />
 
         <EditText
             android:layout_width="match_parent"
@@ -63,7 +73,7 @@
             android:inputType="textMultiLine"
             android:ems="10"
             android:id="@+id/etObservacion"
-            android:layout_weight="0.16" />
+            android:layout_weight="0.08" />
 
         <LinearLayout
             android:orientation="horizontal"

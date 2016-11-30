@@ -12,4 +12,11 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_menu_aplicaciones">Menú de aplicaciones</string>
+
+    <string name="strPlanRecogida">Plan de Recogida</string>
+    <string name="strOrdenCargue">Orden de Cargue</string>
+    <string name="strDireccion">Dirección</string>
+    <string name="strTelefono">Teléfono</string>
+    <string name="strRemitente">Remitente</string>
+    <string name="strHora">Hora</string>
 </resources>

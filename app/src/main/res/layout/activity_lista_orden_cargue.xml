@@ -10,4 +10,17 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.gestionarrecoleccion.gestionarrecoleccion.ListaOrdenCargue">
 
+    <TextView
+        android:text="@string/strOrdenCargue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        style="@style/tpmTitulo"
+        />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/lvOrdenCargue"
+        android:layout_below="@+id/textView" />
 </RelativeLayout>

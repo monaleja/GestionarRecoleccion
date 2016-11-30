@@ -2,61 +2,105 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="20dp"
+    android:layout_margin="10dp"
+    android:background="@drawable/border_listview_row">
 
-    <LinearLayout
-        android:orientation="vertical"
+        <TextView
+            android:text="@string/strPlanRecogida"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvPlanRecogida"
+            android:textSize="20dp"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
+            style="@style/tpmEtiqueta"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvPlarecCodigo"
+            android:textSize="20dp"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused" />
+
+        <TextView
+            android:text="@string/strOrdenCargue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvOrdenCargue"
+            android:textSize="20dp"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
+            style="@style/tpmEtiqueta"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvOrdcarCodigo"
+            android:textSize="20dp"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused" />
+
+        <TextView
+            android:text="@string/strDireccion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvDireccion"
+            android:textSize="20dp"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
+            style="@style/tpmEtiqueta"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvRemitenteDireccion"
+            android:textSize="20dp"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused" />
+
+    <TextView
+        android:text="@string/strTelefono"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp">
+        android:layout_height="wrap_content"
+        android:id="@+id/tvTelefono"
+        android:textSize="20dp"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        style="@style/tpmEtiqueta"/>
 
-        <TextView
-            android:text="TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView"
-            android:textSize="20dp"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvRemitenteTelefono"
+        android:textSize="20dp"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
-        <TextView
-            android:text="TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView2"
-            android:textSize="20dp"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused" />
+    <TextView
+        android:text="@string/strRemitente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvRemitente"
+        android:textSize="20dp"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        style="@style/tpmEtiqueta"/>
 
-        <TextView
-            android:text="TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView3"
-            android:textSize="20dp"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvRemitenteNombre"
+        android:textSize="20dp"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
-        <TextView
-            android:text="TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView4"
-            android:textSize="20dp"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused" />
+    <TextView
+        android:text="@string/strHora"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvHora"
+        android:textSize="20dp"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        style="@style/tpmEtiqueta"/>
 
-        <TextView
-            android:text="TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView5"
-            android:textSize="20dp"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvOrdcarHora"
+        android:textSize="20dp"
+        android:textColor="@color/colorPrimaryText" />
 
-        <TextView
-            android:text="TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView6"
-            android:textSize="20dp"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused" />
-
-    </LinearLayout>
 </LinearLayout>

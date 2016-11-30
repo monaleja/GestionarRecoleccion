@@ -15,4 +15,7 @@
     <item name="secondary_text" type="color">#727272</item>
     <item name="icons" type="color">#FFFFFF</item>
     <item name="divider" type="color">#B6B6B6</item>
+    <color name="colorBackgroundLabel">#CCCCCC</color>
+    <color name="colorPrimaryText">#212121</color>
+    <color name="gray">#696969</color>
 </resources>

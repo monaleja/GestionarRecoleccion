@@ -10,25 +10,7 @@
     android:orientation="vertical"
     android:padding="0dp">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/colorFondoCabecera"
-        android:elevation="10dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/strOrdenCargue"
-            android:id="@+id/textView"
-            android:textColor="@color/colorTextoBlanco"
-            android:textStyle="bold"
-            android:gravity="center_vertical|center_horizontal"
-            android:elevation="10dp" />
-    </LinearLayout>
+    <include layout="@layout/activity_title_bar" />
 
     <ListView
         android:layout_width="match_parent"

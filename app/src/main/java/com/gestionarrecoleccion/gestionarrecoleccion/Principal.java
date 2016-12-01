@@ -94,9 +94,9 @@ public class Principal extends ActionBarActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 RespuestaRest respuestaRest = new RespuestaRest(response);
+
                 if(respuestaRest.satisfactorio){
                     Intent intent = new Intent(Principal.this, SeleccionarEmpresa.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("empresasJson", respuestaRest.respuesta);
                     startActivity(intent);
                 } else {

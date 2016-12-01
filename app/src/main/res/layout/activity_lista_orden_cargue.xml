@@ -10,6 +10,8 @@
     android:orientation="vertical"
     android:padding="0dp">
 
+    <include layout="@layout/activity_title_bar" />
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"

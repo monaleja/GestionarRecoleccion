@@ -34,7 +34,6 @@ public class SeleccionarEmpresa extends ActionBarActivity {
     JSONArray empresasJson = new JSONArray();
     ArrayList<EmpresaUsuario> empresas = new ArrayList<EmpresaUsuario>();
     ListView lvEmpresas;
-    boolean pruebas;
     Dialog DialogAgregarNovedad;
 
     @Override
@@ -64,10 +63,9 @@ public class SeleccionarEmpresa extends ActionBarActivity {
                         empresa.getString("cencos_codigo"),
                         empresa.getString("cencos_nombre"));
 
-                guardarDatosSesion(empresaUsuario, false);
+                guardarDatosSesion(empresaUsuario);
                 goSeleccionarEmpresaToMenuAplicaciones(empresaUsuario);
             }
-
         } catch (JSONException e) {
             Toast.makeText(getApplicationContext(), "Algo salio mal, por favor contactar con el área de soporte.", Toast.LENGTH_SHORT).show();
         }
@@ -117,15 +115,14 @@ public class SeleccionarEmpresa extends ActionBarActivity {
         lvEmpresas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                pruebas = false;
                 final EmpresaUsuario empresa = (EmpresaUsuario) parent.getItemAtPosition(position);
-                guardarDatosSesion(empresa, false);
+                guardarDatosSesion(empresa);
                 goSeleccionarEmpresaToMenuAplicaciones(empresa);
             }
         });
     }
 
-    public void guardarDatosSesion(EmpresaUsuario empresaUsuario,boolean pruebas)
+    public void guardarDatosSesion(EmpresaUsuario empresaUsuario)
     {
         SharedPreferences sharedPref = getSharedPreferences("DatosSesionRedetransMovil", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
@@ -140,11 +137,14 @@ public class SeleccionarEmpresa extends ActionBarActivity {
     }
 
     public void goSeleccionarEmpresaToMenuAplicaciones (EmpresaUsuario empresa){
-        Toast.makeText(getApplicationContext(), "Tap centro costo: "+empresa.getCencosNombre(), Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Tap centro costo: "+empresa.getCencosNombre(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Tap usuario: "+empresa.getUsuarioLogin(), Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(SeleccionarEmpresa.this, ListaOrdenCargue.class);
         intent.putExtra("usuarioLogin", empresa.getUsuarioLogin());
         intent.putExtra("usuarioCencos", empresa.getCencosNombre());
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
 
         startActivity(intent);
     }

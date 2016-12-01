@@ -17,25 +17,28 @@ import java.util.ArrayList;
  */
 
 public class AdapterOrdenCargue extends BaseAdapter {
-    Context context;
+
+    private Context context;
+    private ArrayList<OrdenCargueEntidad> ordencargue;
+
+    public AdapterOrdenCargue(Context context, ArrayList<OrdenCargueEntidad> ordencargue) {
+        this.context = context;
+        this.ordencargue = ordencargue;
+    }
 
     @Override
     public int getCount() {
-        return 0;
-    }
-
-    public AdapterOrdenCargue(Context context, ArrayList<OrdenCargueEntidad> ordenCargueEntidad) {
-        this.context = context;
+        return ordencargue.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return ordencargue.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
     @Override

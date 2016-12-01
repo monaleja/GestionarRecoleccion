@@ -1,6 +1,5 @@
 package com.gestionarrecoleccion.gestionarrecoleccion;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gestionarrecoleccion.gestionarrecoleccion.adapters.AdapterOrdenCargue;
+import com.gestionarrecoleccion.gestionarrecoleccion.config.ConfigurarCliente;
 import com.gestionarrecoleccion.gestionarrecoleccion.modelos.OrdenCargueEntidad;
 import com.gestionarrecoleccion.gestionarrecoleccion.utils.RespuestaRest;
 import com.loopj.android.http.AsyncHttpClient;
@@ -28,11 +28,10 @@ import cz.msebera.android.httpclient.Header;
 public class ListaOrdenCargue extends AppCompatActivity {
     ListView lvOrdenCargue;
     TextView tvUsuarioLogin;
-    TextView tvUsuarioCencos;
-    Dialog progressDialog;
+    TextView tvUsuarioCentrocosto;
+    JSONArray ordenescargueJson;
     SharedPreferences sharedPref;
     ArrayList<OrdenCargueEntidad> ordenescargue = new ArrayList<OrdenCargueEntidad>();
-    JSONArray ordenescargueJson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +43,11 @@ public class ListaOrdenCargue extends AppCompatActivity {
 
     public void initComponents(){
         lvOrdenCargue = (ListView)findViewById(R.id.lvOrdenCargue);
-        sharedPref = getSharedPreferences("DatosSesionSilogtranMovil",Context.MODE_PRIVATE);
-        /*tvUsuarioLogin = (TextView) findViewById(R.id.tvUsuarioLogin);
-        tvUsuarioCencos = (TextView) findViewById(R.id.tvUsuarioCencos);
-
+        sharedPref = getSharedPreferences("DatosSesionRedetransMovil",Context.MODE_PRIVATE);
+        tvUsuarioLogin = (TextView) findViewById(R.id.tvUsuarioLogin);
+        tvUsuarioCentrocosto = (TextView) findViewById(R.id.tvUsuarioCentrocosto);
         tvUsuarioLogin.setText(sharedPref.getString("usuarioLogin", ""));
-        tvUsuarioCencos.setText(sharedPref.getString("cencosNombre", ""));*/
+        tvUsuarioCentrocosto.setText(sharedPref.getString("cencosNombre", ""));
     }
 
     public void listarOrdenes(){
@@ -57,12 +55,13 @@ public class ListaOrdenCargue extends AppCompatActivity {
         progressDialog.setMessage("Cargando ordenes de cargue...");
         progressDialog.show();
 
-        AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
+        AsyncHttpClient cliente = new ConfigurarCliente(new AsyncHttpClient(), getApplicationContext()).getCliente();
+
         RequestParams requestParams = new RequestParams();
         requestParams.add("accion","ListaOrdenCargue");
         requestParams.add("usuarioCodigo", sharedPref.getString("usuarioCodigo", ""));
 
-        asyncHttpClient.post(getApplicationContext(), "http://181.48.247.202/redetransmovil/apps/gestionarRecoleccion/gestionarRecoleccion.php", requestParams, new JsonHttpResponseHandler() {
+        cliente.post(getApplicationContext(), "http://181.48.247.202/redetransmovil/apps/gestionarRecoleccion/gestionarRecoleccion.php", requestParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 RespuestaRest respuestaRest = new RespuestaRest(response);
@@ -77,37 +76,16 @@ public class ListaOrdenCargue extends AppCompatActivity {
                         lvOrdenCargue = (ListView) findViewById(R.id.lvOrdenCargue);
                         lvOrdenCargue.setAdapter(adapterOrdencargue);
 
-
                     } catch (JSONException e) {
                         Toast.makeText(getApplicationContext(), "Algo salio mal, por favor contactar con el área de soporte.", Toast.LENGTH_SHORT).show();
                     }
-
-
                 } else {
                     Toast.makeText(getApplicationContext(), respuestaRest.mensaje, Toast.LENGTH_SHORT).show();
                 }
             }
 
-            /*public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-
-                RespuestaRest respuestaRest = new RespuestaRest(response);
-
-                if(respuestaRest.satisfactorio){
-                    JSONArray data = respuestaRest.getDataJsonArray();
-
-                    ArrayList<OrdenCargueEntidad> ordenCargue = new OrdenCargueEntidad().jsonArrayToArrayListOrdenCargue(data);
-                    AdapterOrdenCargue adapterOrdenCargue = new AdapterOrdenCargue(getApplicationContext(), ordenCargue);
-
-                    lvOrdenCargue.setAdapter(adapterOrdenCargue);
-                    adapterOrdenCargue.notifyDataSetChanged();
-                } else {
-                    Toast.makeText(getApplicationContext(), respuestaRest.mensaje, Toast.LENGTH_SHORT).show();
-                }
-
-            }*/
-
             @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Toast.makeText(getApplicationContext(), "Algo salio mal, por favor contactar con el área de soporte.", Toast.LENGTH_SHORT).show();
             }
 
@@ -119,19 +97,17 @@ public class ListaOrdenCargue extends AppCompatActivity {
     }
 
     public void poblarListaOrdenCargue(){
+
        for (int i = 0; i < ordenescargueJson.length(); i++) {
             try {
-                JSONObject aplicacion = ordenescargueJson.getJSONObject(i);
-                ordenescargue.add(
-                        new OrdenCargueEntidad(
-                                aplicacion.getString("planrecogida"),
-                                aplicacion.getString("ordencargue"),
-                                aplicacion.getString("remitente_nombre"),
-                                aplicacion.getString("remitente_direccion"),
-                                aplicacion.getString("remitente_telefono"),
-                                aplicacion.getString("hora")
-                        )
-                );
+                JSONObject ordencargue = ordenescargueJson.getJSONObject(i);
+                ordenescargue.add(new OrdenCargueEntidad(
+                                ordencargue.getString("planrecogida"),
+                                ordencargue.getString("ordencargue"),
+                                ordencargue.getString("remitente_nombre"),
+                                ordencargue.getString("remitente_direccion"),
+                                ordencargue.getString("remitente_telefono"),
+                                ordencargue.getString("hora")));
             } catch (JSONException e) {
                 Toast.makeText(getApplicationContext(), "Algo salio mal, por favor contactar con el área de soporte.", Toast.LENGTH_SHORT).show();
             }

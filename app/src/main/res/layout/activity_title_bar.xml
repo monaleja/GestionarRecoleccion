@@ -1,21 +1,12 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:padding="10dp"
+    android:padding="5dp"
     android:background="@color/colorFondoCabecera"
     android:elevation="10dp"
     android:layout_height="50dp">
-=======
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="70dp"
-    android:padding="10dp"
-    android:background="@color/colorFondoCabecera"
-    android:elevation="10dp">
->>>>>>> 9867e883ceb72a6fa163ad444d34f8e15bac8754
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -25,11 +16,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-<<<<<<< HEAD
             android:textAppearance="?android:attr/textAppearanceSmall"
-=======
-            android:textAppearance="?android:attr/textAppearanceMedium"
->>>>>>> 9867e883ceb72a6fa163ad444d34f8e15bac8754
             android:text="LOGIN"
             android:id="@+id/tvUsuarioLogin"
             android:textColor="@color/colorTextoBlanco"/>
@@ -57,11 +44,5 @@
             app:srcCompat="@mipmap/ic_cerrar"
             android:id="@+id/imageView"
             android:layout_gravity="right" />
-<<<<<<< HEAD
     </LinearLayout>
-=======
-
-    </LinearLayout>
-
->>>>>>> 9867e883ceb72a6fa163ad444d34f8e15bac8754
 </FrameLayout>

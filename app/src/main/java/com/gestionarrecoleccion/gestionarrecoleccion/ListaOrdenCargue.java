@@ -2,9 +2,14 @@ package com.gestionarrecoleccion.gestionarrecoleccion;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +34,7 @@ public class ListaOrdenCargue extends AppCompatActivity {
     ListView lvOrdenCargue;
     TextView tvUsuarioLogin;
     TextView tvUsuarioCentrocosto;
+    ImageView ivCerrarSesion;
     JSONArray ordenescargueJson;
     SharedPreferences sharedPref;
     ArrayList<OrdenCargueEntidad> ordenescargue = new ArrayList<OrdenCargueEntidad>();
@@ -38,10 +44,12 @@ public class ListaOrdenCargue extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_orden_cargue);
         initComponents();
+        cerrarSesion();
         listarOrdenes();
     }
 
     public void initComponents(){
+        ivCerrarSesion = (ImageView) findViewById(R.id.imageView);
         lvOrdenCargue = (ListView)findViewById(R.id.lvOrdenCargue);
         sharedPref = getSharedPreferences("DatosSesionRedetransMovil",Context.MODE_PRIVATE);
         tvUsuarioLogin = (TextView) findViewById(R.id.tvUsuarioLogin);
@@ -112,5 +120,28 @@ public class ListaOrdenCargue extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Algo salio mal, por favor contactar con el área de soporte.", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+   public void cerrarSesion(){
+       ivCerrarSesion.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               AlertDialog.Builder builder = new AlertDialog.Builder(ListaOrdenCargue.this);
+               builder.setTitle("Cerrar Sesión")
+                       .setMessage("¿Desea Cerrar la Sesión?")
+                       .setPositiveButton("Aceptar", new DialogInterface.OnClickListener(){
+                           public void onClick(DialogInterface dialogInterface, int i){
+                               Intent intent = new Intent(ListaOrdenCargue.this, Principal.class);
+                               startActivity(intent);
+                           }
+                       })
+                       .setNegativeButton("Cancelar", new DialogInterface.OnClickListener(){
+                           public void onClick(DialogInterface dialogInterface, int i){
+
+                           }
+                       }).show();
+           }
+       });
+
     }
 }

@@ -13,7 +13,7 @@ import com.gestionarrecoleccion.gestionarrecoleccion.modelos.OrdenCargueEntidad;
 import java.util.ArrayList;
 
 /**
- * Created by root on 28/11/16.
+ * Created by Alejandra on 28/11/16.
  */
 
 public class AdapterOrdenCargue extends BaseAdapter {

@@ -1,22 +1,22 @@
 <resources>
     <string name="app_name">Gestionar Recolección</string>
-
-    <string name="action_settings">Opciones</string>
+    <string name="title_activity_seleccionar_centrocosto">Seleccionar centro de costo</string>
+    <string name="title_activity_cumplir_ordencargue">Cumplir Orden Cargue</string>
 
     <string name="strUsuario">Digite su usuario</string>
     <string name="strClave">Digite su clave</string>
     <string name="strLogin">Ingresar</string>
 
-    <string name="strPie">© ColombiaSoftware</string>
-    <string name="title_activity_seleccionar_centrocosto">Seleccionar centro de costo</string>
-
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_menu_aplicaciones">Menú de aplicaciones</string>
-
     <string name="strPlanRecogida">Plan de Recogida</string>
-    <string name="strOrdenCargue">Orden de Cargue</string>
+    <string name="strOrdenCargue">Orden Cargue</string>
     <string name="strDireccion">Dirección</string>
     <string name="strTelefono">Teléfono</string>
     <string name="strRemitente">Remitente</string>
     <string name="strHora">Hora</string>
+    <string name="strRemesa">Remesa</string>
+    <string name="strPeso">Peso</string>
+    <string name="strCantidad">Cantidad</string>
+    <string name="strRegionalDestino">Regional Destino</string>
+
+    <string name="strPie">© ColombiaSoftware</string>
 </resources>

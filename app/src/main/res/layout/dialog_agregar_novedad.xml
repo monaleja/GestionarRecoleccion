@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -7,7 +8,8 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin">
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:weightSum="1">
 
     <LinearLayout
         android:id="@+id/llAgregarNovedad"
@@ -15,7 +17,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:weightSum="1">
+        android:weightSum="1"
+        android:layout_weight="0.08"
+        android:textColor="@color/common_google_signin_btn_text_light_pressed">
 
         <TextView
             android:text="Agregar Novedad"
@@ -26,10 +30,11 @@
             android:layout_weight="0.16"
             tools:ignore="InefficientWeight"
             style="@style/tpmTitulo"
-            android:textSize="24dp" />
+            android:textSize="24dp"
+            android:textColor="@color/common_google_signin_btn_text_light_pressed" />
 
         <TextView
-            android:text="Orden cargue"
+            android:text="Orden Cargue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tvOrdenCargue"
@@ -76,10 +81,10 @@
             android:layout_weight="0.08" />
 
         <LinearLayout
+            android:id="@+id/llBotonesAgregarNovedad"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="69dp"
-            android:id="@+id/llhBuscarHelpdesk">
+            android:layout_height="69dp">
 
             <Button
                 android:text="Guardar"
@@ -94,8 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/btnCancelarNovedad"
-                android:layout_weight="1"
-                android:onClick="cancelarNovedad" />
+                android:layout_weight="1" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

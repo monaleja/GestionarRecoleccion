@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 /**
- * Created by root on 28/11/16.
+ * Created by Alejandra on 28/11/16.
  */
 
 public class OrdenCargueEntidad {
@@ -18,7 +18,6 @@ public class OrdenCargueEntidad {
     String remitenteDireccion;
     String remitenteTelefono;
     String ordenCargueHora;
-    JSONObject dataJsonObject;
 
     public OrdenCargueEntidad(String planRecogidaCodigo, String ordenCargueCodigo, String remitenteNombre, String remitenteDireccion, String remitenteTelefono, String ordenCargueHora) {
         this.planRecogidaCodigo = planRecogidaCodigo;

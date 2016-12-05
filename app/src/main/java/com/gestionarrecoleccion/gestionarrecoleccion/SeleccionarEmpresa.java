@@ -47,12 +47,10 @@ public class SeleccionarEmpresa extends ActionBarActivity {
 
             if(empresasJson.length() > 1) {
                 poblarListaEmpresas();
-
                 AdapterEmpresaUsuario adapterEmpresaUsuario = new AdapterEmpresaUsuario(this, empresas);
                 lvEmpresas = (ListView) findViewById(R.id.lvEmpresas);
                 lvEmpresas.setAdapter(adapterEmpresaUsuario);
                 setEventoTapEmpresa();
-                //setEventoTapSostenidoEmpresa();
             }else{
                 JSONObject empresa = empresasJson.getJSONObject(0);
                 EmpresaUsuario empresaUsuario = new EmpresaUsuario(
@@ -69,28 +67,6 @@ public class SeleccionarEmpresa extends ActionBarActivity {
         } catch (JSONException e) {
             Toast.makeText(getApplicationContext(), "Algo salio mal, por favor contactar con el área de soporte.", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_seleccionar_empresa, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     public void poblarListaEmpresas()
@@ -137,8 +113,6 @@ public class SeleccionarEmpresa extends ActionBarActivity {
     }
 
     public void goSeleccionarEmpresaToMenuAplicaciones (EmpresaUsuario empresa){
-        Toast.makeText(getApplicationContext(), "Tap centro costo: "+empresa.getCencosNombre(), Toast.LENGTH_SHORT).show();
-        Toast.makeText(getApplicationContext(), "Tap usuario: "+empresa.getUsuarioLogin(), Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(SeleccionarEmpresa.this, ListaOrdenCargue.class);
         intent.putExtra("usuarioLogin", empresa.getUsuarioLogin());
@@ -147,12 +121,5 @@ public class SeleccionarEmpresa extends ActionBarActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
 
         startActivity(intent);
-    }
-
-    public void abrirDialogo(Activity activity){
-        DialogAgregarNovedad = new Dialog(activity);
-        DialogAgregarNovedad.setContentView(R.layout.dialog_agregar_novedad);
-        DialogAgregarNovedad.getWindow().setLayout(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
-        DialogAgregarNovedad.show();
     }
 }

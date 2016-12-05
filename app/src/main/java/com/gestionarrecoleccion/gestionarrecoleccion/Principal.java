@@ -49,34 +49,12 @@ public class Principal extends ActionBarActivity {
     private void initComponents() {
         Miscelanea.verificarConexion(this);
         validarSesion();
+
         /* Mantener fuente por defecto, ya que si se define el edittext de tipo password cambia la fuente del hint */
         etClave = (EditText) findViewById(R.id.etClave);
         etClave.setTypeface(Typeface.DEFAULT);
         etClave.setTransformationMethod(new PasswordTransformationMethod());
-
         etUsuario = (EditText) findViewById(R.id.etUsuario);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_principal, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     public void getEmpresas(View view) {
@@ -119,12 +97,11 @@ public class Principal extends ActionBarActivity {
     public void validarSesion()
     {
         SharedPreferences sharedPref = getSharedPreferences("DatosSesionRedetransMovil", Context.MODE_PRIVATE);
-
         String usuarioLogin = sharedPref.getString("usuarioLogin", "");
+
         if(!usuarioLogin.equals("")){
-            //Intent intent = new Intent(Principal.this, Principal.class);
-            //Intent intent = new Intent(Principal.this, MenuAplicaciones.class);
-            //startActivity(intent);
+            Intent intent = new Intent(Principal.this, ListaOrdenCargue.class);
+            startActivity(intent);
         }
     }
 }

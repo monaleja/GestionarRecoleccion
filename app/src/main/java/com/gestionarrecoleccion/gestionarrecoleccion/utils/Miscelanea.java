@@ -2,6 +2,9 @@ package com.gestionarrecoleccion.gestionarrecoleccion.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.widget.Toast;
@@ -16,6 +19,7 @@ import cz.msebera.android.httpclient.Header;
  * Created by Alejandra on 27/11/2016
  */
 public class Miscelanea {
+
     public static void verificarConexion(final Activity activity) {
         ConnectivityManager cm = (ConnectivityManager) activity.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
@@ -43,6 +47,6 @@ public class Miscelanea {
 
     public static void showToastConnectionFailure(Context context)
     {
-        Toast.makeText(context, "La aplicación requiere de una conexión a internet, por favor verifique el estado de su red. Si tiene una red de datos moviles, verifique su disponibilidad.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "La aplicación requiere de una conexión a internet, por favor verifique el estado de su red. Si tiene una red de datos móviles, verifique su disponibilidad.", Toast.LENGTH_LONG).show();
     }
 }

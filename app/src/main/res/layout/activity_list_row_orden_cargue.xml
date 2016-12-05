@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -16,6 +17,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tvPlanRecogida"
             android:textSize="20dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
             style="@style/tpmEtiqueta"/>
 
@@ -24,6 +26,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tvPlarecCodigo"
             android:textSize="20dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
         <TextView
@@ -32,6 +35,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tvOrdenCargue"
             android:textSize="20dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
             style="@style/tpmEtiqueta"/>
 
@@ -40,6 +44,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tvOrdcarCodigo"
             android:textSize="20dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
         <TextView
@@ -48,6 +53,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tvDireccion"
             android:textSize="20dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
             style="@style/tpmEtiqueta"/>
 
@@ -56,6 +62,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/tvRemitenteDireccion"
             android:textSize="20dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
     <TextView
@@ -64,6 +71,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvTelefono"
         android:textSize="20dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         style="@style/tpmEtiqueta"/>
 
@@ -72,6 +80,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvRemitenteTelefono"
         android:textSize="20dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
     <TextView
@@ -80,6 +89,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvRemitente"
         android:textSize="20dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         style="@style/tpmEtiqueta"/>
 
@@ -88,6 +98,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvRemitenteNombre"
         android:textSize="20dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
     <TextView
@@ -104,6 +115,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvOrdcarHora"
         android:textSize="20dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/colorPrimaryText" />
-
 </LinearLayout>

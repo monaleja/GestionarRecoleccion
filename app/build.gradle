@@ -29,6 +29,7 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta1'
     compile 'com.google.code.gson:gson:2.4'
     compile 'com.android.support:appcompat-v7:24.2.0'
+    compile 'me.dm7.barcodescanner:zbar:1.8.4'
 }
 
 /*dependencies {

@@ -25,7 +25,9 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 
-
+/**
+ * Created by Alejandra on 27/11/2016.
+ */
 public class Principal extends ActionBarActivity {
 
     EditText etUsuario;

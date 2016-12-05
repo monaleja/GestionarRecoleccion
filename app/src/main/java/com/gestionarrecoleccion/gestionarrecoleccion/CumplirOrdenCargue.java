@@ -9,22 +9,24 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gestionarrecoleccion.gestionarrecoleccion.modelos.OrdenCargueEntidad;
 import com.gestionarrecoleccion.gestionarrecoleccion.modelos.RegionalEntidad;
 
 import java.util.ArrayList;
 
+import me.dm7.barcodescanner.zbar.Result;
+import me.dm7.barcodescanner.zbar.ZBarScannerView;
+
 /**
  * Created by Alejandra on 03/12/2016.
  */
-
-public class CumplirOrdenCargue extends AppCompatActivity {
+public class CumplirOrdenCargue extends AppCompatActivity /*implements ZBarScannerView.ResultHandler*/ {
     TextView tvUsuarioLogin;
     TextView tvUsuarioCentrocosto;
     TextView tvOrdenCargueCodigo;
@@ -32,39 +34,48 @@ public class CumplirOrdenCargue extends AppCompatActivity {
     EditText etPeso;
     EditText etCantidad;
     Spinner spRegionalDestino;
-    Button btnGuardarCumplido;
-    Button btnCancelarCumplido;
     ImageView ivCerrarSesion;
     SharedPreferences sharedPref;
     ArrayList<OrdenCargueEntidad> arrayOrdenescargue = new ArrayList<OrdenCargueEntidad>();
     ArrayList<RegionalEntidad> objRegional = new ArrayList<RegionalEntidad>();
     ArrayAdapter<RegionalEntidad> regionalAdapter;
+    ZBarScannerView mScannerView;
+    String valorCodigoDeBarras;
+    String tipoCodigoDeBarras;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cumplir_ordencargue);
         initComponents();
+
+        Intent intent = getIntent();
+        valorCodigoDeBarras = intent.getStringExtra("valorCodigoDeBarras");
+        tipoCodigoDeBarras = intent.getStringExtra("tipoCodigoDeBarras");
+
+        etRemesa = (EditText) findViewById(R.id.etRemesa);
+        etRemesa.setText(valorCodigoDeBarras);
     }
 
-    public void initComponents(){
+    public void initComponents()
+    {
         sharedPref = getSharedPreferences("DatosSesionRedetransMovil",Context.MODE_PRIVATE);
         tvUsuarioLogin = (TextView) findViewById(R.id.tvUsuarioLogin);
-        tvUsuarioCentrocosto = (TextView) findViewById(R.id.tvUsuarioCentrocosto);
         tvUsuarioLogin.setText(sharedPref.getString("usuarioLogin", ""));
+        tvUsuarioCentrocosto = (TextView) findViewById(R.id.tvUsuarioCentrocosto);
         tvUsuarioCentrocosto.setText(sharedPref.getString("cencosNombre", ""));
         ivCerrarSesion = (ImageView) findViewById(R.id.imageView);
         tvOrdenCargueCodigo = (TextView) findViewById(R.id.tvOrdenCargueCodigo);
-        etRemesa = (EditText) findViewById(R.id.etRemesa);
+        //etRemesa = (EditText) findViewById(R.id.etRemesa);
         etPeso = (EditText) findViewById(R.id.etPeso);
         etCantidad = (EditText) findViewById(R.id.etCantidad);
         spRegionalDestino = (Spinner) findViewById(R.id.spRegionalDestino);
-        btnGuardarCumplido = (Button) findViewById(R.id.btnGuardarCumplido);
-        btnCancelarCumplido = (Button) findViewById(R.id.btnCancelarCumplido);
         poblarRegional();
     }
 
-    public void poblarRegional(){
+    public void poblarRegional()
+    {
         objRegional.add(new RegionalEntidad("0","SELECCIONE UNO"));
         objRegional.add(new RegionalEntidad("1","CENTRO"));
         objRegional.add(new RegionalEntidad("2","ANTIOQUIA"));
@@ -83,15 +94,31 @@ public class CumplirOrdenCargue extends AppCompatActivity {
         spRegionalDestino.setAdapter(regionalAdapter);
     }
 
-    public void cancelarCumplido(View view){
-        btnCancelarCumplido.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(CumplirOrdenCargue.this, ListaOrdenCargue.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }
-        });
+    public void escanearCodigoDeBarras(View view)
+    {
+        Intent intent = new Intent(CumplirOrdenCargue.this, EscanearCodigoDeBarras.class);
+        startActivity(intent);
+        /*mScannerView = new ZBarScannerView(this);
+        setContentView(mScannerView);
+        mScannerView.setResultHandler(this);
+        mScannerView.startCamera();*/
+    }
+
+    /*@Override
+    public void handleResult(Result result) {
+        valorCodigoDeBarras = result.getContents();
+        tipoCodigoDeBarras = result.getBarcodeFormat().getName();
+
+        etRemesa.setText(valorCodigoDeBarras);
+        mScannerView.stopCamera();
+        mScannerView.destroyDrawingCache();
+    }*/
+
+    public void cancelarCumplido(View view)
+    {
+        Intent intent = new Intent(CumplirOrdenCargue.this, ListaOrdenCargue.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     public void cerrarSesion(View view)
@@ -99,7 +126,8 @@ public class CumplirOrdenCargue extends AppCompatActivity {
         destruirSesion();
     }
 
-    public void destruirSesion() {
+    public void destruirSesion()
+    {
         AlertDialog.Builder builder = new AlertDialog.Builder(CumplirOrdenCargue.this);
         builder.setTitle("Cerrar sesión");
         builder.setMessage("¿Desea cerrar sesión?");

@@ -84,11 +84,13 @@
                 android:layout_marginRight="80dp" />
 
             <ImageView
-                android:layout_width="51dp"
+                android:layout_width="45dp"
                 android:layout_height="44dp"
                 android:layout_gravity="right"
                 android:background="@android:drawable/ic_menu_camera"
-                android:layout_marginRight="0dp" />
+                android:layout_marginRight="0dp"
+                android:onClick="escanearCodigoDeBarras"
+                android:id="@+id/ivEscanear" />
         </LinearLayout>
 
         <TextView

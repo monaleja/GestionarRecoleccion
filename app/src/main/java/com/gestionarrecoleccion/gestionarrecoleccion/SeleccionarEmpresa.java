@@ -29,7 +29,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 /**
- * Created by Alejandra on 27/11/2016. :P :P :P
+ * Created by Alejandra on 27/11/2016.
  */
 public class SeleccionarEmpresa extends ActionBarActivity {
 

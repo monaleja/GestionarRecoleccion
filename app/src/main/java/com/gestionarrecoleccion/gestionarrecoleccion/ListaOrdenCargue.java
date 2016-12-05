@@ -42,6 +42,9 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * Created by Alejandra on 28/11/2016.
+ */
 public class ListaOrdenCargue extends AppCompatActivity {
     ListView lvOrdenCargue;
     TextView tvUsuarioLogin;
@@ -61,7 +64,8 @@ public class ListaOrdenCargue extends AppCompatActivity {
     final CharSequence[] items = {"Agregar novedad", "Cumplir orden cargue"};
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_orden_cargue);
         initComponents();
@@ -69,7 +73,8 @@ public class ListaOrdenCargue extends AppCompatActivity {
         setEventoTapOrdencargue();
     }
 
-    public void initComponents(){
+    public void initComponents()
+    {
         ivCerrarSesion = (ImageView) findViewById(R.id.imageView);
         lvOrdenCargue = (ListView)findViewById(R.id.lvOrdenCargue);
         sharedPref = getSharedPreferences("DatosSesionRedetransMovil",Context.MODE_PRIVATE);
@@ -79,7 +84,8 @@ public class ListaOrdenCargue extends AppCompatActivity {
         tvUsuarioCentrocosto.setText(sharedPref.getString("cencosNombre", ""));
     }
 
-    public void listarOrdenes(){
+    public void listarOrdenes()
+    {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Cargando ordenes de cargue...");
         progressDialog.show();
@@ -125,7 +131,8 @@ public class ListaOrdenCargue extends AppCompatActivity {
         });
     }
 
-    public void poblarListaOrdenCargue(){
+    public void poblarListaOrdenCargue()
+    {
 
        for (int i = 0; i < ordenescargueJson.length(); i++) {
             try {
@@ -143,7 +150,8 @@ public class ListaOrdenCargue extends AppCompatActivity {
         }
     }
 
-    public void setEventoTapOrdencargue(){
+    public void setEventoTapOrdencargue()
+    {
         lvOrdenCargue.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> parent, final View view, final int position, long id) {
@@ -173,7 +181,8 @@ public class ListaOrdenCargue extends AppCompatActivity {
         });
     }
 
-    public void abrirDialogo(Activity activity,ArrayList<Par> parametros){
+    public void abrirDialogo(Activity activity,ArrayList<Par> parametros)
+    {
         DialogAgregarNovedad = new Dialog(activity);
         DialogAgregarNovedad.setContentView(R.layout.dialog_agregar_novedad);
         DialogAgregarNovedad.getWindow().setLayout(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
@@ -210,7 +219,8 @@ public class ListaOrdenCargue extends AppCompatActivity {
         });
     }
 
-    public void poblarTipoNovedad(){
+    public void poblarTipoNovedad()
+    {
         objTipoNovedad.add(new TipoNovedadEntidad("0","SELECCIONE UNO"));
         objTipoNovedad.add(new TipoNovedadEntidad("34","34-RECOLECCION NO AUTORIZADA"));
         objTipoNovedad.add(new TipoNovedadEntidad("52","52-DIRECCION DE RECOLECCION ERRADA"));
@@ -222,7 +232,8 @@ public class ListaOrdenCargue extends AppCompatActivity {
         spTipoNovedad.setAdapter(tipoNovedadAdapter);
     }
 
-    public void guardarAgregarNovedad(){
+    public void guardarAgregarNovedad()
+    {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Grabando novedad...");
         progressDialog.show();
@@ -267,7 +278,8 @@ public class ListaOrdenCargue extends AppCompatActivity {
         destruirSesion();
     }
 
-    public void destruirSesion() {
+    public void destruirSesion()
+    {
         AlertDialog.Builder builder = new AlertDialog.Builder(ListaOrdenCargue.this);
         builder.setTitle("Cerrar sesión");
         builder.setMessage("¿Desea cerrar sesión?");

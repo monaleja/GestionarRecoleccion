@@ -121,32 +121,8 @@ public class SeleccionarEmpresa extends ActionBarActivity {
         intent.putExtra("usuarioLogin", empresa.getUsuarioLogin());
         intent.putExtra("usuarioCencos", empresa.getCencosNombre());
 
-        //intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
-        abrirDialogo(SeleccionarEmpresa.this);
-        //startActivity(intent);
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
+
+        startActivity(intent);
     }
-<<<<<<< HEAD
-=======
-
-    public void abrirDialogo(Activity activity){
-        ArrayList<String> TipoNovedad = new ArrayList<String>();
-
-        TipoNovedad.add(0,"0-Seleccione Uno");
-        TipoNovedad.add(1,"34-Recoleccion no autorizada");
-        TipoNovedad.add(2,"52-Direccion de recoleccion errada");
-        TipoNovedad.add(3,"53-Mercancia no esta lista");
-        TipoNovedad.add(4,"54-El cliente no tiene conocimiento de la recoleccion");
-        TipoNovedad.add(5,"55-Cupo");
-
-        DialogAgregarNovedad = new Dialog(activity);
-        DialogAgregarNovedad.setContentView(R.layout.dialog_agregar_novedad);
-        DialogAgregarNovedad.getWindow().setLayout(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
-        DialogAgregarNovedad.show();
-
-        Spinner spTipoNovedad = (Spinner) DialogAgregarNovedad.findViewById(R.id.spTipoNovedad);
-        spTipoNovedad.setAdapter(new ArrayAdapter<String>(SeleccionarEmpresa.this, android.R.layout.simple_spinner_dropdown_item, TipoNovedad));
-        //spTipoNovedad.setSelection(0);
-
-    }
->>>>>>> eddc17c5ab3fb5fd71512de2c83b15ef2bb1a3fc
 }

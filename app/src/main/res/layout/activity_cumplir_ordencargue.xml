@@ -84,7 +84,6 @@
                 android:layout_marginRight="80dp" />
 
             <ImageView
-                android:id="@+id/imageView"
                 android:layout_width="51dp"
                 android:layout_height="44dp"
                 android:layout_gravity="right"
@@ -166,6 +165,7 @@
             android:layout_weight="1"
             style="@style/ButtonCS"
             android:background="@drawable/cbuttonblue"
-            android:layout_marginRight="1.5dp" />
+            android:layout_marginRight="1.5dp"
+            android:onClick="cancelarCumplido" />
     </LinearLayout>
 </LinearLayout>

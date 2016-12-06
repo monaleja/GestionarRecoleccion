@@ -11,12 +11,16 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gestionarrecoleccion.gestionarrecoleccion.adapters.AdapterListaRemesa;
+import com.gestionarrecoleccion.gestionarrecoleccion.adapters.AdapterOrdenCargue;
 import com.gestionarrecoleccion.gestionarrecoleccion.modelos.OrdenCargueEntidad;
 import com.gestionarrecoleccion.gestionarrecoleccion.modelos.RegionalEntidad;
+import com.gestionarrecoleccion.gestionarrecoleccion.modelos.Remesa;
 
 import java.util.ArrayList;
 
@@ -29,7 +33,7 @@ import me.dm7.barcodescanner.zbar.ZBarScannerView;
 public class CumplirOrdenCargue extends AppCompatActivity /*implements ZBarScannerView.ResultHandler*/ {
     TextView tvUsuarioLogin;
     TextView tvUsuarioCentrocosto;
-    TextView tvOrdenCargueCodigo;
+    TextView tvOrdenCargue;
     EditText etRemesa;
     EditText etPeso;
     EditText etCantidad;
@@ -38,10 +42,12 @@ public class CumplirOrdenCargue extends AppCompatActivity /*implements ZBarScann
     SharedPreferences sharedPref;
     ArrayList<OrdenCargueEntidad> arrayOrdenescargue = new ArrayList<OrdenCargueEntidad>();
     ArrayList<RegionalEntidad> objRegional = new ArrayList<RegionalEntidad>();
+    ArrayList<Remesa> arrayRemesa;
     ArrayAdapter<RegionalEntidad> regionalAdapter;
     ZBarScannerView mScannerView;
     String valorCodigoDeBarras;
     String tipoCodigoDeBarras;
+    ListView listRemesas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -66,12 +72,13 @@ public class CumplirOrdenCargue extends AppCompatActivity /*implements ZBarScann
         tvUsuarioCentrocosto = (TextView) findViewById(R.id.tvUsuarioCentrocosto);
         tvUsuarioCentrocosto.setText(sharedPref.getString("cencosNombre", ""));
         ivCerrarSesion = (ImageView) findViewById(R.id.imageView);
-        tvOrdenCargueCodigo = (TextView) findViewById(R.id.tvOrdenCargueCodigo);
-        //etRemesa = (EditText) findViewById(R.id.etRemesa);
+        tvOrdenCargue = (TextView) findViewById(R.id.tvOrdenCargue);
         etPeso = (EditText) findViewById(R.id.etPeso);
         etCantidad = (EditText) findViewById(R.id.etCantidad);
         spRegionalDestino = (Spinner) findViewById(R.id.spRegionalDestino);
         poblarRegional();
+
+        arrayRemesa = new ArrayList<Remesa>();
     }
 
     public void poblarRegional()
@@ -150,5 +157,27 @@ public class CumplirOrdenCargue extends AppCompatActivity /*implements ZBarScann
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+
+
+    public void AdicionarRemesa(View view)
+    {
+        Toast.makeText(getApplicationContext(), "Estoy Adicionado la Remesa", Toast.LENGTH_SHORT).show();
+
+        RegionalEntidad regional = (RegionalEntidad)spRegionalDestino.getSelectedItem();
+
+        arrayRemesa.add(new Remesa(
+                etRemesa.getText().toString(),
+                etPeso.getText().toString(),
+                etCantidad.getText().toString(),
+                "0101000001",
+                regional.getRegionalCodigo(),
+                regional.getRegionalNombre()
+                ));
+
+        AdapterListaRemesa adapterlistaremesa = new AdapterListaRemesa(CumplirOrdenCargue.this, arrayRemesa);
+        listRemesas = (ListView) findViewById(R.id.lvRemesas);
+        listRemesas.setAdapter(adapterlistaremesa);
     }
 }

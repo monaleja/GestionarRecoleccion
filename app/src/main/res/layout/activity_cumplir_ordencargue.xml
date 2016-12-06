@@ -44,20 +44,12 @@
 
         <TextView
             android:id="@+id/tvOrdenCargue"
-            android:text="Orden Cargue"
+            android:text="Orden Cargue:"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/tpmEtiqueta"
             android:textSize="20dp"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-        <TextView
-            android:id="@+id/tvOrdenCargueCodigo"
-            android:layout_width="match_parent"
-            android:layout_height="34dp"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/tvRemesa"
@@ -91,39 +83,60 @@
                 android:layout_marginRight="0dp"
                 android:onClick="escanearCodigoDeBarras"
                 android:id="@+id/ivEscanear" />
+
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvPeso"
-            android:text="@string/strPeso"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/tpmEtiqueta"
-            android:textSize="20dp"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+            android:weightSum="1">
 
-        <EditText
-            android:id="@+id/etPeso"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10" />
+            <TextView
+                android:id="@+id/tvPeso"
+                android:text="@string/strPeso"
+                android:layout_height="wrap_content"
+                style="@style/tpmEtiqueta"
+                android:textSize="20dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_width="63dp"
+                android:layout_weight="0.48"
+                android:layout_marginRight="10dp" />
 
-        <TextView
-            android:id="@+id/tvCantidad"
-            android:text="@string/strCantidad"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/tpmEtiqueta"
-            android:textSize="20dp"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            <TextView
+                android:id="@+id/tvCantidad"
+                android:text="@string/strCantidad"
+                android:layout_height="wrap_content"
+                style="@style/tpmEtiqueta"
+                android:textSize="20dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_width="63dp"
+                android:layout_weight="0.51" />
 
-        <EditText
-            android:id="@+id/etCantidad"
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10" />
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/etPeso"
+                android:layout_width="63dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"/>
+
+            <EditText
+                android:id="@+id/etCantidad"
+                android:layout_width="63dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:layout_weight="1" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvRegionalDestino"
@@ -142,12 +155,44 @@
     </LinearLayout>
 
     <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp">
+
+        <Button
+            android:id="@+id/btnAdicionarCumplido"
+            android:text="Adicionar"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            style="@style/ButtonCS"
+            android:background="@drawable/cbuttonblue"
+            android:layout_marginRight="1.5dp"
+            android:onClick="AdicionarRemesa" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lvRemesas"
+        android:layout_width="match_parent"
+        android:layout_height="76dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="0.84" />
+
+    <LinearLayout
         android:id="@+id/llBotonesCumplirOrdenCargue"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="37dp"
         android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp">
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp">
 
         <Button
             android:id="@+id/btnGuardarCumplido"

@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -17,10 +18,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gestionarrecoleccion.gestionarrecoleccion.adapters.AdapterListaRemesa;
-import com.gestionarrecoleccion.gestionarrecoleccion.adapters.AdapterOrdenCargue;
 import com.gestionarrecoleccion.gestionarrecoleccion.modelos.OrdenCargueEntidad;
 import com.gestionarrecoleccion.gestionarrecoleccion.modelos.RegionalEntidad;
 import com.gestionarrecoleccion.gestionarrecoleccion.modelos.Remesa;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+
 
 import java.util.ArrayList;
 
@@ -154,7 +158,18 @@ public class CumplirOrdenCargue extends AppCompatActivity /*implements ZBarScann
     public void guardarCumplido(View view)
     {
         if(arrayRemesa.size() == 0){
-            Toast.makeText(getApplicationContext(), "Debe diligenciar al menos un detalle.", Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(view.getContext())
+                    .setTitle("Validacion")
+                    .setMessage("Debe diligenciar al menos un detalle para Cumplir la Orden de Cargue!")
+                    .setPositiveButton(android.R.string.yes, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }else{
+            Gson gson = new GsonBuilder().create();
+            JsonArray jsonArray = gson.toJsonTree(arrayRemesa).getAsJsonArray();
+
+            //Toast.makeText(view.getContext(), "array List -> "+jsonArray.toString(), Toast.LENGTH_LONG).show();
+            //Log.d("TEST", jsonArray.toString());
         }
     }
 

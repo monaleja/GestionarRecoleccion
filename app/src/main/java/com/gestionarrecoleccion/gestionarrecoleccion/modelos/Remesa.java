@@ -74,4 +74,17 @@ public class Remesa {
     public void setRegdesNombre(String regdesNombre) {
         this.regdesNombre = regdesNombre;
     }
+
+
+    @Override
+    public String toString() {
+        return "{" +
+                "remesaCodigo='" + remesaCodigo + '\'' +
+                ", peso='" + peso + '\'' +
+                ", cantidad='" + cantidad + '\'' +
+                ", ordcarCodigo='" + ordcarCodigo + '\'' +
+                ", regdesCodigo='" + regdesCodigo + '\'' +
+                ", regdesNombre='" + regdesNombre + '\'' +
+                '}';
+    }
 }

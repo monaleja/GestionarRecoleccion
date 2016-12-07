@@ -56,12 +56,17 @@ public class CumplirOrdenCargue extends AppCompatActivity /*implements ZBarScann
         setContentView(R.layout.activity_cumplir_ordencargue);
         initComponents();
 
-        Intent intent = getIntent();
-        valorCodigoDeBarras = intent.getStringExtra("valorCodigoDeBarras");
-        tipoCodigoDeBarras = intent.getStringExtra("tipoCodigoDeBarras");
+        SharedPreferences sharedPref = getSharedPreferences("DatosSesionRedetransMovil", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("valorCodigoDeBarras", "");
+        editor.commit();
+    }
 
-        etRemesa = (EditText) findViewById(R.id.etRemesa);
-        etRemesa.setText(valorCodigoDeBarras);
+    @Override
+    public void onResume() {
+        super.onResume();
+        sharedPref = getSharedPreferences("DatosSesionRedetransMovil",Context.MODE_PRIVATE);
+        etRemesa.setText(sharedPref.getString("valorCodigoDeBarras", ""));
     }
 
     public void initComponents()
@@ -75,6 +80,7 @@ public class CumplirOrdenCargue extends AppCompatActivity /*implements ZBarScann
         ivCerrarSesion = (ImageView) findViewById(R.id.imageView);
         tvOrdenCargueCodigo = (TextView) findViewById(R.id.tvOrdenCargueCodigo);
         tvOrdenCargueCodigo.setText(intent.getStringExtra("ordenCargueCodigo"));
+        etRemesa = (EditText) findViewById(R.id.etRemesa);
         etPeso = (EditText) findViewById(R.id.etPeso);
         etCantidad = (EditText) findViewById(R.id.etCantidad);
         spRegionalDestino = (Spinner) findViewById(R.id.spRegionalDestino);
@@ -107,21 +113,7 @@ public class CumplirOrdenCargue extends AppCompatActivity /*implements ZBarScann
     {
         Intent intent = new Intent(CumplirOrdenCargue.this, EscanearCodigoDeBarras.class);
         startActivity(intent);
-        /*mScannerView = new ZBarScannerView(this);
-        setContentView(mScannerView);
-        mScannerView.setResultHandler(this);
-        mScannerView.startCamera();*/
     }
-
-    /*@Override
-    public void handleResult(Result result) {
-        valorCodigoDeBarras = result.getContents();
-        tipoCodigoDeBarras = result.getBarcodeFormat().getName();
-
-        etRemesa.setText(valorCodigoDeBarras);
-        mScannerView.stopCamera();
-        mScannerView.destroyDrawingCache();
-    }*/
 
     public void adicionarRemesa(View view)
     {
@@ -168,6 +160,7 @@ public class CumplirOrdenCargue extends AppCompatActivity /*implements ZBarScann
 
     public void cancelarCumplido(View view)
     {
+
         Intent intent = new Intent(CumplirOrdenCargue.this, ListaOrdenCargue.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);

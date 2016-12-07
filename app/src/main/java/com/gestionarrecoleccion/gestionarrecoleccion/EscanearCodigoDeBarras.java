@@ -1,6 +1,8 @@
 package com.gestionarrecoleccion.gestionarrecoleccion;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -35,13 +37,19 @@ public class EscanearCodigoDeBarras extends AppCompatActivity implements ZBarSca
 
     @Override
     public void handleResult(Result result) {
-        Intent intent = new Intent(EscanearCodigoDeBarras.this, CumplirOrdenCargue.class);
+        /*Intent intent = new Intent(EscanearCodigoDeBarras.this, CumplirOrdenCargue.class);
         intent.putExtra("valorCodigoDeBarras", result.getContents());
-        intent.putExtra("tipoCodigoDeBarras", result.getBarcodeFormat().getName());
+        intent.putExtra("tipoCodigoDeBarras", result.getBarcodeFormat().getName());*/
+
+        SharedPreferences sharedPref = getSharedPreferences("DatosSesionRedetransMovil", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        editor.putString("valorCodigoDeBarras", result.getContents());
+        editor.commit();
 
         mScannerView.stopCamera();
-        //onBackPressed();
+        onBackPressed();
 
-        startActivity(intent);
+        //startActivity(intent);
     }
 }

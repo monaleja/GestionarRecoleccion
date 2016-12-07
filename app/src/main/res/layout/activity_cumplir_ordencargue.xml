@@ -42,14 +42,30 @@
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="10dp">
 
-        <TextView
-            android:id="@+id/tvOrdenCargue"
-            android:text="Orden Cargue:"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/tpmEtiqueta"
-            android:textSize="20dp"
-            android:textAppearance="?android:attr/textAppearanceSmall"/>
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvOrdenCargue"
+                android:text="Orden Cargue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/tpmEtiqueta"
+                android:textSize="20dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tvOrdenCargueCodigo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/tpmEtiqueta"
+                android:textSize="20dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_weight="1" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvRemesa"
@@ -172,7 +188,7 @@
             style="@style/ButtonCS"
             android:background="@drawable/cbuttonblue"
             android:layout_marginRight="1.5dp"
-            android:onClick="AdicionarRemesa" />
+            android:onClick="adicionarRemesa" />
 
     </LinearLayout>
 
@@ -202,7 +218,8 @@
             android:layout_weight="1"
             style="@style/ButtonCS"
             android:background="@drawable/cbuttonblue"
-            android:layout_marginRight="1.5dp" />
+            android:layout_marginRight="1.5dp"
+            android:onClick="guardarCumplido" />
 
         <Button
             android:id="@+id/btnCancelarCumplido"

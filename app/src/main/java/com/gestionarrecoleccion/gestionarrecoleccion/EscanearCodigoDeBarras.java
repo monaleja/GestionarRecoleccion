@@ -40,6 +40,7 @@ public class EscanearCodigoDeBarras extends AppCompatActivity implements ZBarSca
         intent.putExtra("tipoCodigoDeBarras", result.getBarcodeFormat().getName());
 
         mScannerView.stopCamera();
+        //onBackPressed();
 
         startActivity(intent);
     }

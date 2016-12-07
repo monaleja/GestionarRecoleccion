@@ -6,33 +6,33 @@ package com.gestionarrecoleccion.gestionarrecoleccion.modelos;
 
 public class Remesa {
 
-    private String codigo;
+    private String remesaCodigo;
     private String peso;
     private String cantidad;
-    private String ordcarcodigo;
-    private String regdescodigo;
-    private String regdesnombre;
+    private String ordcarCodigo;
+    private String regdesCodigo;
+    private String regdesNombre;
 
-    public Remesa(String codigo, String peso, String cantidad, String ordcarcodigo, String regdescodigo, String regdesnombre) {
+    public Remesa(String remesaCodigo, String peso, String cantidad, String ordcarCodigo, String regdesCodigo, String regdesNombre) {
 
-        this.codigo = codigo;
+        this.remesaCodigo = remesaCodigo;
         this.peso = peso;
         this.cantidad = cantidad;
-        this.ordcarcodigo = ordcarcodigo;
-        this.regdescodigo = regdescodigo;
-        this.regdesnombre = regdesnombre;
+        this.ordcarCodigo = ordcarCodigo;
+        this.regdesCodigo = regdesCodigo;
+        this.regdesNombre = regdesNombre;
     }
 
     public Remesa(){
 
     }
 
-    public String getCodigo() {
-        return codigo;
+    public String getRemesaCodigo() {
+        return remesaCodigo;
     }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
+    public void setRemesaCodigo(String remesaCodigo) {
+        this.remesaCodigo = remesaCodigo;
     }
 
     public String getPeso() {
@@ -51,27 +51,27 @@ public class Remesa {
         this.cantidad = cantidad;
     }
 
-    public String getOrdcarcodigo() {
-        return ordcarcodigo;
+    public String getOrdcarCodigo() {
+        return ordcarCodigo;
     }
 
-    public void setOrdcarcodigo(String ordcarcodigo) {
-        this.ordcarcodigo = ordcarcodigo;
+    public void setOrdcarCodigo(String ordcarCodigo) {
+        this.ordcarCodigo = ordcarCodigo;
     }
 
-    public String getRegdescodigo() {
-        return regdescodigo;
+    public String getRegdesCodigo() {
+        return regdesCodigo;
     }
 
-    public void setRegdescodigo(String regdescodigo) {
-        this.regdescodigo = regdescodigo;
+    public void setRegdesCodigo(String regdesCodigo) {
+        this.regdesCodigo = regdesCodigo;
     }
 
-    public String getRegdesnombre() {
-        return regdesnombre;
+    public String getRegdesNombre() {
+        return regdesNombre;
     }
 
-    public void setRegdesnombre(String regdesnombre) {
-        this.regdesnombre = regdesnombre;
+    public void setRegdesNombre(String regdesNombre) {
+        this.regdesNombre = regdesNombre;
     }
 }

@@ -170,7 +170,7 @@ public class ListaOrdenCargue extends AppCompatActivity {
                         }else
                             if(items[which].toString().equals("Cumplir orden cargue")){
                                 Intent intent = new Intent(ListaOrdenCargue.this,CumplirOrdenCargue.class);
-                                //intent.putExtra("dataJsonObject", objOrdencargue.getDataJsonObject().toString());
+                                intent.putExtra("ordenCargueCodigo", objOrdencargue.getOrdenCargueCodigo());
                                 startActivity(intent);
                             }
                     }

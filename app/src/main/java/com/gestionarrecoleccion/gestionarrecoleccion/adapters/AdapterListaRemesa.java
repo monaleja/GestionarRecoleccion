@@ -56,12 +56,10 @@ public class AdapterListaRemesa extends BaseAdapter {
         TextView lvremesa_tvcantidad = (TextView)view.findViewById(R.id.lvremesa_tvcantidad);
         TextView lvremesa_tvregionaldestino = (TextView)view.findViewById(R.id.lvremesa_tvregionaldestino);
 
-
-        lvremesa_tvRemesa.setText(remesa_actual.getCodigo());
+        lvremesa_tvRemesa.setText(remesa_actual.getRemesaCodigo());
         lvremesa_tvpeso.setText(""+remesa_actual.getPeso());
         lvremesa_tvcantidad.setText(""+remesa_actual.getCantidad());
-        lvremesa_tvregionaldestino.setText(remesa_actual.getRegdesnombre());
-
+        lvremesa_tvregionaldestino.setText(remesa_actual.getRegdesNombre());
 
         return view;
     }

@@ -8,14 +8,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
         android:id="@+id/tvLvEmpresa" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
+        android:text="CENTRO COSTO"
         android:id="@+id/tvLvCencos"
         android:textColor="@android:color/black" />
 </LinearLayout>

@@ -58,6 +58,7 @@ public class ListaOrdenCargue extends AppCompatActivity {
     JSONArray ordenescargueJson;
     SharedPreferences sharedPref;
     Dialog DialogAgregarNovedad;
+    boolean validacionNovedad;
     ArrayList<OrdenCargueEntidad> arrayOrdenescargue = new ArrayList<OrdenCargueEntidad>();
     ArrayList<TipoNovedadEntidad> objTipoNovedad = new ArrayList<TipoNovedadEntidad>();
     ArrayAdapter<TipoNovedadEntidad> tipoNovedadAdapter;
@@ -162,7 +163,6 @@ public class ListaOrdenCargue extends AppCompatActivity {
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //Log.d("Opción:",""+items[which]);
                         if(items[which].toString().equals("Agregar novedad")){
                             ArrayList<Par> parametros = new ArrayList<Par>();
                             parametros.add(new Par("ordencargue",objOrdencargue.getOrdenCargueCodigo()));
@@ -207,7 +207,9 @@ public class ListaOrdenCargue extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 guardarAgregarNovedad();
-                DialogAgregarNovedad.dismiss();
+                if(validacionNovedad){
+                    DialogAgregarNovedad.dismiss();
+                }
             }
         });
 
@@ -234,6 +236,7 @@ public class ListaOrdenCargue extends AppCompatActivity {
 
     public void guardarAgregarNovedad()
     {
+        final String[] respuesta = new String[1];
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Grabando novedad...");
         progressDialog.show();
@@ -256,8 +259,10 @@ public class ListaOrdenCargue extends AppCompatActivity {
                 if (respuestaRest.satisfactorio) {
                     Toast.makeText(getApplicationContext(), respuestaRest.mensaje, Toast.LENGTH_SHORT).show();
                     etObservacion.setText("");
+                    validacionNovedad = true;
                 } else {
                     Toast.makeText(getApplicationContext(), respuestaRest.mensaje, Toast.LENGTH_SHORT).show();
+                    validacionNovedad = false;
                 }
             }
 

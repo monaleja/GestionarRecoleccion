@@ -37,10 +37,6 @@ public class EscanearCodigoDeBarras extends AppCompatActivity implements ZBarSca
 
     @Override
     public void handleResult(Result result) {
-        /*Intent intent = new Intent(EscanearCodigoDeBarras.this, CumplirOrdenCargue.class);
-        intent.putExtra("valorCodigoDeBarras", result.getContents());
-        intent.putExtra("tipoCodigoDeBarras", result.getBarcodeFormat().getName());*/
-
         SharedPreferences sharedPref = getSharedPreferences("DatosSesionRedetransMovil", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
 
@@ -49,7 +45,5 @@ public class EscanearCodigoDeBarras extends AppCompatActivity implements ZBarSca
 
         mScannerView.stopCamera();
         onBackPressed();
-
-        //startActivity(intent);
     }
 }

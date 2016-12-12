@@ -12,8 +12,9 @@ public class Remesa {
     private String ordcarCodigo;
     private String regdesCodigo;
     private String regdesNombre;
+    private String plarecCodigo;
 
-    public Remesa(String remesaCodigo, String peso, String cantidad, String ordcarCodigo, String regdesCodigo, String regdesNombre) {
+    public Remesa(String remesaCodigo, String peso, String cantidad, String ordcarCodigo, String regdesCodigo, String regdesNombre, String plarecCodigo) {
 
         this.remesaCodigo = remesaCodigo;
         this.peso = peso;
@@ -21,6 +22,7 @@ public class Remesa {
         this.ordcarCodigo = ordcarCodigo;
         this.regdesCodigo = regdesCodigo;
         this.regdesNombre = regdesNombre;
+        this.plarecCodigo = plarecCodigo;
     }
 
     public Remesa(){
@@ -75,16 +77,24 @@ public class Remesa {
         this.regdesNombre = regdesNombre;
     }
 
+    public String getPlarecCodigo() {
+        return plarecCodigo;
+    }
+
+    public void setPlarecCodigo(String plarecCodigo) {
+        this.plarecCodigo = plarecCodigo;
+    }
 
     @Override
     public String toString() {
-        return "{" +
+        return "Remesa{" +
                 "remesaCodigo='" + remesaCodigo + '\'' +
                 ", peso='" + peso + '\'' +
                 ", cantidad='" + cantidad + '\'' +
                 ", ordcarCodigo='" + ordcarCodigo + '\'' +
                 ", regdesCodigo='" + regdesCodigo + '\'' +
                 ", regdesNombre='" + regdesNombre + '\'' +
+                ", plarecCodigo='" + plarecCodigo + '\'' +
                 '}';
     }
 }

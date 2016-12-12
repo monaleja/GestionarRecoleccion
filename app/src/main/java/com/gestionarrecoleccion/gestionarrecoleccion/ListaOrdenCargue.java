@@ -58,6 +58,7 @@ public class ListaOrdenCargue extends AppCompatActivity {
     JSONArray ordenescargueJson;
     SharedPreferences sharedPref;
     Dialog DialogAgregarNovedad;
+    boolean validacionNovedad;
     ArrayList<OrdenCargueEntidad> arrayOrdenescargue = new ArrayList<OrdenCargueEntidad>();
     ArrayList<TipoNovedadEntidad> objTipoNovedad = new ArrayList<TipoNovedadEntidad>();
     ArrayAdapter<TipoNovedadEntidad> tipoNovedadAdapter;
@@ -116,6 +117,14 @@ public class ListaOrdenCargue extends AppCompatActivity {
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), respuestaRest.mensaje, Toast.LENGTH_SHORT).show();
+
+                    SharedPreferences sharedPref = getSharedPreferences("DatosSesionRedetransMovil", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.clear().commit();
+
+                    Intent intent = new Intent(ListaOrdenCargue.this, Principal.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                 }
             }
 
@@ -162,7 +171,6 @@ public class ListaOrdenCargue extends AppCompatActivity {
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //Log.d("Opción:",""+items[which]);
                         if(items[which].toString().equals("Agregar novedad")){
                             ArrayList<Par> parametros = new ArrayList<Par>();
                             parametros.add(new Par("ordencargue",objOrdencargue.getOrdenCargueCodigo()));
@@ -171,6 +179,7 @@ public class ListaOrdenCargue extends AppCompatActivity {
                             if(items[which].toString().equals("Cumplir orden cargue")){
                                 Intent intent = new Intent(ListaOrdenCargue.this,CumplirOrdenCargue.class);
                                 intent.putExtra("ordenCargueCodigo", objOrdencargue.getOrdenCargueCodigo());
+                                intent.putExtra("planRecogidaCodigo", objOrdencargue.getPlanRecogidaCodigo());
                                 startActivity(intent);
                             }
                     }
@@ -207,7 +216,6 @@ public class ListaOrdenCargue extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 guardarAgregarNovedad();
-                DialogAgregarNovedad.dismiss();
             }
         });
 
@@ -223,10 +231,33 @@ public class ListaOrdenCargue extends AppCompatActivity {
     {
         objTipoNovedad.add(new TipoNovedadEntidad("0","SELECCIONE UNO"));
         objTipoNovedad.add(new TipoNovedadEntidad("34","34-RECOLECCION NO AUTORIZADA"));
-        objTipoNovedad.add(new TipoNovedadEntidad("52","52-DIRECCION DE RECOLECCION ERRADA"));
-        objTipoNovedad.add(new TipoNovedadEntidad("53","53-MERCANCIA NO ESTA LISTA"));
-        objTipoNovedad.add(new TipoNovedadEntidad("54","54-EL CLIENTE NO TIENE CONOCIMIENTO DE LA RECOLECCION"));
-        objTipoNovedad.add(new TipoNovedadEntidad("55","55-CUPO"));
+        objTipoNovedad.add(new TipoNovedadEntidad("53","52-DIRECCION DE RECOLECCION ERRADA"));
+        objTipoNovedad.add(new TipoNovedadEntidad("54","53-MERCANCIA NO ESTA LISTA"));
+        objTipoNovedad.add(new TipoNovedadEntidad("55","54-EL CLIENTE NO TIENE CONOCIMIENTO DE LA RECOLECCION"));
+        objTipoNovedad.add(new TipoNovedadEntidad("56","55-CUPO"));
+        objTipoNovedad.add(new TipoNovedadEntidad("57","56-DIFICIL MANIPULACION"));
+        objTipoNovedad.add(new TipoNovedadEntidad("58","57-NO TRANSPORTABLE"));
+        objTipoNovedad.add(new TipoNovedadEntidad("59","58-SE HACE AL DIA SIGUIENTE (ALMACEN DE CADENA)"));
+        objTipoNovedad.add(new TipoNovedadEntidad("60","59-PROBLEMA DE PROGRAMACION (OPERACIONES)"));
+        objTipoNovedad.add(new TipoNovedadEntidad("64","61-RECOLECCION EN RUTA REGIONAL"));
+        objTipoNovedad.add(new TipoNovedadEntidad("65","62-REMITENTE POSTERGA FECHA DE RECOLECCION"));
+        objTipoNovedad.add(new TipoNovedadEntidad("66","63-CERRADO LUGAR DE RECOLECCION"));
+        objTipoNovedad.add(new TipoNovedadEntidad("67","64-FALTA AUTORIZACION PARA RECOGER"));
+        objTipoNovedad.add(new TipoNovedadEntidad("68","65-NECESARIA LA PRESENCIA DEL REPRESENTANTE"));
+        objTipoNovedad.add(new TipoNovedadEntidad("69","66-NO ENTREGAN POR FALTA DE ORDEN DE CARGUE"));
+        objTipoNovedad.add(new TipoNovedadEntidad("63","76-RECOLECCION PROGRAMADA DESPUES DEL MEDIO DIA"));
+        objTipoNovedad.add(new TipoNovedadEntidad("109","109-VISITA FUERA DE HORARIO"));
+        objTipoNovedad.add(new TipoNovedadEntidad("110","110-FALTA DE TIEMPO PAR RECOGER"));
+        objTipoNovedad.add(new TipoNovedadEntidad("111","111-IMPREVISTO"));
+        objTipoNovedad.add(new TipoNovedadEntidad("112","112-MAL ESTADO DE LAS UNIDADES"));
+        objTipoNovedad.add(new TipoNovedadEntidad("113","113-NO HAY MERCANCIA"));
+        objTipoNovedad.add(new TipoNovedadEntidad("114","114-SE REQUIERE CITA PARA RECOGER"));
+        objTipoNovedad.add(new TipoNovedadEntidad("115","115-FALTA DE SOLICITUD O AUTORIZACIÓN"));
+        objTipoNovedad.add(new TipoNovedadEntidad("116","116-NO CONOCEN AL CONTACTO"));
+        objTipoNovedad.add(new TipoNovedadEntidad("117","117-EL CONTACTO O RESPONSABLE NO SE ENCUENTRA"));
+        objTipoNovedad.add(new TipoNovedadEntidad("118","118-NO TRABAJAN LOS SABADOS"));
+        objTipoNovedad.add(new TipoNovedadEntidad("119","119-CLIENTE DESPACHO POR OTRA TRANSPORTADORA"));
+        objTipoNovedad.add(new TipoNovedadEntidad("120","120-LA MERCANCIA NO CORRESPONDE  A LO AUTORIZADO"));
 
         tipoNovedadAdapter = new ArrayAdapter<TipoNovedadEntidad>(this, android.R.layout.simple_spinner_dropdown_item, objTipoNovedad);
         spTipoNovedad.setAdapter(tipoNovedadAdapter);
@@ -234,6 +265,7 @@ public class ListaOrdenCargue extends AppCompatActivity {
 
     public void guardarAgregarNovedad()
     {
+        final String[] respuesta = new String[1];
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Grabando novedad...");
         progressDialog.show();
@@ -256,6 +288,7 @@ public class ListaOrdenCargue extends AppCompatActivity {
                 if (respuestaRest.satisfactorio) {
                     Toast.makeText(getApplicationContext(), respuestaRest.mensaje, Toast.LENGTH_SHORT).show();
                     etObservacion.setText("");
+                    DialogAgregarNovedad.dismiss();
                 } else {
                     Toast.makeText(getApplicationContext(), respuestaRest.mensaje, Toast.LENGTH_SHORT).show();
                 }

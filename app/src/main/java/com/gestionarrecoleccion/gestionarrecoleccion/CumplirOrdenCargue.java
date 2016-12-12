@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,7 +21,6 @@ import android.widget.Toast;
 
 import com.gestionarrecoleccion.gestionarrecoleccion.adapters.AdapterListaRemesa;
 import com.gestionarrecoleccion.gestionarrecoleccion.config.ConfigurarCliente;
-import com.gestionarrecoleccion.gestionarrecoleccion.modelos.OrdenCargueEntidad;
 import com.gestionarrecoleccion.gestionarrecoleccion.modelos.RegionalEntidad;
 import com.gestionarrecoleccion.gestionarrecoleccion.modelos.Remesa;
 import com.gestionarrecoleccion.gestionarrecoleccion.utils.RespuestaRest;
@@ -31,19 +31,15 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
-import me.dm7.barcodescanner.zbar.Result;
-import me.dm7.barcodescanner.zbar.ZBarScannerView;
 
 /**
  * Created by Alejandra on 03/12/2016.
  */
-public class CumplirOrdenCargue extends AppCompatActivity /*implements ZBarScannerView.ResultHandler*/ {
+public class CumplirOrdenCargue extends AppCompatActivity {
     TextView tvUsuarioLogin;
     TextView tvUsuarioCentrocosto;
     TextView tvOrdenCargueCodigo;
@@ -51,16 +47,15 @@ public class CumplirOrdenCargue extends AppCompatActivity /*implements ZBarScann
     EditText etPeso;
     EditText etCantidad;
     Spinner spRegionalDestino;
+    String plarecCodigo;
     ImageView ivCerrarSesion;
     SharedPreferences sharedPref;
-    ArrayList<OrdenCargueEntidad> arrayOrdenescargue = new ArrayList<OrdenCargueEntidad>();
-    ArrayList<RegionalEntidad> objRegional = new ArrayList<RegionalEntidad>();
-    ArrayList<Remesa> arrayRemesa;
-    ArrayAdapter<RegionalEntidad> regionalAdapter;
-    ZBarScannerView mScannerView;
-    String valorCodigoDeBarras;
-    String tipoCodigoDeBarras;
     ListView lvRemesas;
+    ArrayList<RegionalEntidad> objRegional = new ArrayList<RegionalEntidad>();
+    ArrayAdapter<RegionalEntidad> regionalAdapter;
+    ArrayList<Remesa> arrayRemesa;
+    AdapterListaRemesa adapterlistaremesa;
+    final CharSequence[] items = {"Eliminar detalle"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -98,7 +93,7 @@ public class CumplirOrdenCargue extends AppCompatActivity /*implements ZBarScann
         etCantidad = (EditText) findViewById(R.id.etCantidad);
         spRegionalDestino = (Spinner) findViewById(R.id.spRegionalDestino);
         poblarRegional();
-
+        plarecCodigo = intent.getStringExtra("planRecogidaCodigo");
         arrayRemesa = new ArrayList<Remesa>();
     }
 
@@ -131,45 +126,99 @@ public class CumplirOrdenCargue extends AppCompatActivity /*implements ZBarScann
     public void adicionarRemesa(View view)
     {
         RegionalEntidad regional = (RegionalEntidad)spRegionalDestino.getSelectedItem();
-        Integer remesaContador = 0;
 
-        if(etRemesa.getText().toString().equals("") || etPeso.getText().toString().equals("")
-                || etCantidad.getText().toString().equals("") || regional.getRegionalCodigo().equals("0")){
-            Toast.makeText(getApplicationContext(), "Faltan campos por diligenciar.", Toast.LENGTH_SHORT).show();
-        }else {
-            for (int i = 0; i < arrayRemesa.size(); i++) {
-                if(arrayRemesa.get(i).getRemesaCodigo().equals(etRemesa.getText().toString())){
-                    remesaContador++;
-                }
-            }
-
-            if(remesaContador > 0){
-                Toast.makeText(getApplicationContext(), "La remesa ya se adicionó al detalle.", Toast.LENGTH_SHORT).show();
-            }else {
+        if(validacionCamposDetalle(view)) {
+            if(validacionRemesaDetalle(view)){
                 arrayRemesa.add(new Remesa(
                         etRemesa.getText().toString(),
                         etPeso.getText().toString(),
                         etCantidad.getText().toString(),
                         tvOrdenCargueCodigo.getText().toString(),
                         regional.getRegionalCodigo(),
-                        regional.getRegionalNombre()
+                        regional.getRegionalNombre(),
+                        plarecCodigo
                 ));
 
-                Toast.makeText(getApplicationContext(), "Orden: " + tvOrdenCargueCodigo.getText().toString(), Toast.LENGTH_SHORT).show();
-
-                AdapterListaRemesa adapterlistaremesa = new AdapterListaRemesa(CumplirOrdenCargue.this, arrayRemesa);
+                adapterlistaremesa = new AdapterListaRemesa(CumplirOrdenCargue.this, arrayRemesa);
                 lvRemesas = (ListView) findViewById(R.id.lvRemesas);
                 lvRemesas.setAdapter(adapterlistaremesa);
+                setEventoTapDetalle();
+
+                etRemesa.setText("");
+                etPeso.setText("");
+                etCantidad.setText("");
+                spRegionalDestino.setSelection(0);
             }
         }
+    }
+
+    public boolean validacionCamposDetalle(View view){
+        RegionalEntidad regional = (RegionalEntidad)spRegionalDestino.getSelectedItem();
+
+        if(etRemesa.getText().toString().equals("") || etPeso.getText().toString().equals("")
+                || etCantidad.getText().toString().equals("") || regional.getRegionalCodigo().equals("0")){
+            new AlertDialog.Builder(view.getContext())
+                    .setTitle("Validación")
+                    .setMessage("Faltan campos por diligenciar.")
+                    .setPositiveButton(android.R.string.yes, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public boolean validacionRemesaDetalle(View view){
+        Integer remesaContador = 0;
+
+        for (int i = 0; i < arrayRemesa.size(); i++) {
+            if(arrayRemesa.get(i).getRemesaCodigo().equals(etRemesa.getText().toString())){
+                remesaContador++;
+            }
+        }
+
+        if(remesaContador > 0){
+            new AlertDialog.Builder(view.getContext())
+                    .setTitle("Validación")
+                    .setMessage("La remesa ya se adicionó al detalle.")
+                    .setPositiveButton(android.R.string.yes, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public void setEventoTapDetalle() {
+        lvRemesas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(final AdapterView<?> parent, final View view, final int position, long id) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(CumplirOrdenCargue.this);
+                builder.setTitle("Menú");
+
+                builder.setItems(items, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(items[which].toString().equals("Eliminar detalle")){
+                            arrayRemesa.remove(parent.getItemAtPosition(position));
+                            adapterlistaremesa.notifyDataSetChanged();
+                        }
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
     }
 
     public void guardarCumplido(View view)
     {
         if(arrayRemesa.size() == 0){
             new AlertDialog.Builder(view.getContext())
-                    .setTitle("Validacion")
-                    .setMessage("Debe diligenciar al menos un detalle para cumplir la orden de cargue!")
+                    .setTitle("Validación")
+                    .setMessage("Debe diligenciar al menos un detalle para cumplir la orden de cargue.")
                     .setPositiveButton(android.R.string.yes, null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
@@ -190,9 +239,7 @@ public class CumplirOrdenCargue extends AppCompatActivity /*implements ZBarScann
             requestParams.add("usuarioCodigo", sharedPref.getString("usuarioCodigo", ""));
             requestParams.add("cencosCodigo", sharedPref.getString("cencosCodigo", ""));
             requestParams.add("cadena", jsonArray.toString());
-
-            Log.d("cadena ", jsonArray.toString());
-
+            //Log.d("cadena ", jsonArray.toString());
             cliente.post("http://181.48.247.202/redetransmovil/apps/gestionarRecoleccion/gestionarRecoleccion.php", requestParams, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -200,6 +247,10 @@ public class CumplirOrdenCargue extends AppCompatActivity /*implements ZBarScann
 
                     if (respuestaRest.satisfactorio) {
                         Toast.makeText(getApplicationContext(), respuestaRest.mensaje, Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(CumplirOrdenCargue.this, ListaOrdenCargue.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
                     } else {
                         Toast.makeText(getApplicationContext(), respuestaRest.mensaje, Toast.LENGTH_SHORT).show();
                     }
@@ -208,6 +259,7 @@ public class CumplirOrdenCargue extends AppCompatActivity /*implements ZBarScann
                 @Override
                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                     Toast.makeText(getApplicationContext(), responseString, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "onFailure", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override

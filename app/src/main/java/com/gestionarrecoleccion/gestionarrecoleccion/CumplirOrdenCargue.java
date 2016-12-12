@@ -1,5 +1,6 @@
 package com.gestionarrecoleccion.gestionarrecoleccion;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,16 +19,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gestionarrecoleccion.gestionarrecoleccion.adapters.AdapterListaRemesa;
+import com.gestionarrecoleccion.gestionarrecoleccion.config.ConfigurarCliente;
 import com.gestionarrecoleccion.gestionarrecoleccion.modelos.OrdenCargueEntidad;
 import com.gestionarrecoleccion.gestionarrecoleccion.modelos.RegionalEntidad;
 import com.gestionarrecoleccion.gestionarrecoleccion.modelos.Remesa;
+import com.gestionarrecoleccion.gestionarrecoleccion.utils.RespuestaRest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import cz.msebera.android.httpclient.Header;
 import me.dm7.barcodescanner.zbar.Result;
 import me.dm7.barcodescanner.zbar.ZBarScannerView;
 
@@ -160,22 +169,57 @@ public class CumplirOrdenCargue extends AppCompatActivity /*implements ZBarScann
         if(arrayRemesa.size() == 0){
             new AlertDialog.Builder(view.getContext())
                     .setTitle("Validacion")
-                    .setMessage("Debe diligenciar al menos un detalle para Cumplir la Orden de Cargue!")
+                    .setMessage("Debe diligenciar al menos un detalle para cumplir la orden de cargue!")
                     .setPositiveButton(android.R.string.yes, null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
         }else{
             Gson gson = new GsonBuilder().create();
             JsonArray jsonArray = gson.toJsonTree(arrayRemesa).getAsJsonArray();
-
             //Toast.makeText(view.getContext(), "array List -> "+jsonArray.toString(), Toast.LENGTH_LONG).show();
             //Log.d("TEST", jsonArray.toString());
+
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage("Cumpliendo orden cargue...");
+            progressDialog.show();
+
+            AsyncHttpClient cliente = new ConfigurarCliente(new AsyncHttpClient(), getApplicationContext()).getCliente();
+
+            RequestParams requestParams = new RequestParams();
+            requestParams.add("accion","cumplirOrdenCargue");
+            requestParams.add("usuarioCodigo", sharedPref.getString("usuarioCodigo", ""));
+            requestParams.add("cencosCodigo", sharedPref.getString("cencosCodigo", ""));
+            requestParams.add("cadena", jsonArray.toString());
+
+            Log.d("cadena ", jsonArray.toString());
+
+            cliente.post("http://181.48.247.202/redetransmovil/apps/gestionarRecoleccion/gestionarRecoleccion.php", requestParams, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    RespuestaRest respuestaRest = new RespuestaRest(response);
+
+                    if (respuestaRest.satisfactorio) {
+                        Toast.makeText(getApplicationContext(), respuestaRest.mensaje, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), respuestaRest.mensaje, Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    Toast.makeText(getApplicationContext(), responseString, Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFinish() {
+                    progressDialog.dismiss();
+                }
+            });
         }
     }
 
     public void cancelarCumplido(View view)
     {
-
         Intent intent = new Intent(CumplirOrdenCargue.this, ListaOrdenCargue.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);

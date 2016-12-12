@@ -8,8 +8,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.method.PasswordTransformationMethod;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -76,7 +74,7 @@ public class Principal extends ActionBarActivity {
                 RespuestaRest respuestaRest = new RespuestaRest(response);
 
                 if(respuestaRest.satisfactorio){
-                    Intent intent = new Intent(Principal.this, SeleccionarEmpresa.class);
+                    Intent intent = new Intent(Principal.this, SeleccionarCentrocosto.class);
                     intent.putExtra("empresasJson", respuestaRest.respuesta);
                     startActivity(intent);
                 } else {

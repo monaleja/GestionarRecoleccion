@@ -1,10 +1,4 @@
-package com.gestionarrecoleccion.gestionarrecoleccion.modelos;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
+package com.gestionarrecoleccion.gestionarrecoleccion.entidades;
 
 /**
  * Created by Alejandra on 28/11/16.

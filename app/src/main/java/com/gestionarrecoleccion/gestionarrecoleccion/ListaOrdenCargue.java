@@ -11,13 +11,11 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -26,9 +24,9 @@ import android.widget.Toast;
 
 import com.gestionarrecoleccion.gestionarrecoleccion.adapters.AdapterOrdenCargue;
 import com.gestionarrecoleccion.gestionarrecoleccion.config.ConfigurarCliente;
-import com.gestionarrecoleccion.gestionarrecoleccion.modelos.OrdenCargueEntidad;
-import com.gestionarrecoleccion.gestionarrecoleccion.modelos.Par;
-import com.gestionarrecoleccion.gestionarrecoleccion.modelos.TipoNovedadEntidad;
+import com.gestionarrecoleccion.gestionarrecoleccion.entidades.OrdenCargueEntidad;
+import com.gestionarrecoleccion.gestionarrecoleccion.entidades.Par;
+import com.gestionarrecoleccion.gestionarrecoleccion.entidades.TipoNovedadEntidad;
 import com.gestionarrecoleccion.gestionarrecoleccion.utils.RespuestaRest;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -58,17 +56,16 @@ public class ListaOrdenCargue extends AppCompatActivity {
     JSONArray ordenescargueJson;
     SharedPreferences sharedPref;
     Dialog DialogAgregarNovedad;
-    boolean validacionNovedad;
-    ArrayList<OrdenCargueEntidad> arrayOrdenescargue = new ArrayList<OrdenCargueEntidad>();
-    ArrayList<TipoNovedadEntidad> objTipoNovedad = new ArrayList<TipoNovedadEntidad>();
-    ArrayAdapter<TipoNovedadEntidad> tipoNovedadAdapter;
+    ArrayList<OrdenCargueEntidad> objArrayOrdenCargue = new ArrayList<OrdenCargueEntidad>();
+    ArrayList<TipoNovedadEntidad> objArrayTipoNovedad = new ArrayList<TipoNovedadEntidad>();
+    ArrayAdapter<TipoNovedadEntidad> adapterTipoNovedad;
     final CharSequence[] items = {"Agregar novedad", "Cumplir orden cargue"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_orden_cargue);
+        setContentView(R.layout.activity_lista_ordencargue);
         initComponents();
         listarOrdenes();
         setEventoTapOrdencargue();
@@ -108,7 +105,7 @@ public class ListaOrdenCargue extends AppCompatActivity {
 
                         poblarListaOrdenCargue();
 
-                        AdapterOrdenCargue adapterOrdencargue = new AdapterOrdenCargue(ListaOrdenCargue.this, arrayOrdenescargue);
+                        AdapterOrdenCargue adapterOrdencargue = new AdapterOrdenCargue(ListaOrdenCargue.this, objArrayOrdenCargue);
                         lvOrdenCargue = (ListView) findViewById(R.id.lvOrdenCargue);
                         lvOrdenCargue.setAdapter(adapterOrdencargue);
 
@@ -146,7 +143,7 @@ public class ListaOrdenCargue extends AppCompatActivity {
        for (int i = 0; i < ordenescargueJson.length(); i++) {
             try {
                 JSONObject ordencargue = ordenescargueJson.getJSONObject(i);
-                arrayOrdenescargue.add(new OrdenCargueEntidad(
+                objArrayOrdenCargue.add(new OrdenCargueEntidad(
                                 ordencargue.getString("planrecogida"),
                                 ordencargue.getString("ordencargue"),
                                 ordencargue.getString("remitente_nombre"),
@@ -229,43 +226,42 @@ public class ListaOrdenCargue extends AppCompatActivity {
 
     public void poblarTipoNovedad()
     {
-        objTipoNovedad.add(new TipoNovedadEntidad("0","SELECCIONE UNO"));
-        objTipoNovedad.add(new TipoNovedadEntidad("34","34-RECOLECCION NO AUTORIZADA"));
-        objTipoNovedad.add(new TipoNovedadEntidad("53","52-DIRECCION DE RECOLECCION ERRADA"));
-        objTipoNovedad.add(new TipoNovedadEntidad("54","53-MERCANCIA NO ESTA LISTA"));
-        objTipoNovedad.add(new TipoNovedadEntidad("55","54-EL CLIENTE NO TIENE CONOCIMIENTO DE LA RECOLECCION"));
-        objTipoNovedad.add(new TipoNovedadEntidad("56","55-CUPO"));
-        objTipoNovedad.add(new TipoNovedadEntidad("57","56-DIFICIL MANIPULACION"));
-        objTipoNovedad.add(new TipoNovedadEntidad("58","57-NO TRANSPORTABLE"));
-        objTipoNovedad.add(new TipoNovedadEntidad("59","58-SE HACE AL DIA SIGUIENTE (ALMACEN DE CADENA)"));
-        objTipoNovedad.add(new TipoNovedadEntidad("60","59-PROBLEMA DE PROGRAMACION (OPERACIONES)"));
-        objTipoNovedad.add(new TipoNovedadEntidad("64","61-RECOLECCION EN RUTA REGIONAL"));
-        objTipoNovedad.add(new TipoNovedadEntidad("65","62-REMITENTE POSTERGA FECHA DE RECOLECCION"));
-        objTipoNovedad.add(new TipoNovedadEntidad("66","63-CERRADO LUGAR DE RECOLECCION"));
-        objTipoNovedad.add(new TipoNovedadEntidad("67","64-FALTA AUTORIZACION PARA RECOGER"));
-        objTipoNovedad.add(new TipoNovedadEntidad("68","65-NECESARIA LA PRESENCIA DEL REPRESENTANTE"));
-        objTipoNovedad.add(new TipoNovedadEntidad("69","66-NO ENTREGAN POR FALTA DE ORDEN DE CARGUE"));
-        objTipoNovedad.add(new TipoNovedadEntidad("63","76-RECOLECCION PROGRAMADA DESPUES DEL MEDIO DIA"));
-        objTipoNovedad.add(new TipoNovedadEntidad("109","109-VISITA FUERA DE HORARIO"));
-        objTipoNovedad.add(new TipoNovedadEntidad("110","110-FALTA DE TIEMPO PAR RECOGER"));
-        objTipoNovedad.add(new TipoNovedadEntidad("111","111-IMPREVISTO"));
-        objTipoNovedad.add(new TipoNovedadEntidad("112","112-MAL ESTADO DE LAS UNIDADES"));
-        objTipoNovedad.add(new TipoNovedadEntidad("113","113-NO HAY MERCANCIA"));
-        objTipoNovedad.add(new TipoNovedadEntidad("114","114-SE REQUIERE CITA PARA RECOGER"));
-        objTipoNovedad.add(new TipoNovedadEntidad("115","115-FALTA DE SOLICITUD O AUTORIZACIÓN"));
-        objTipoNovedad.add(new TipoNovedadEntidad("116","116-NO CONOCEN AL CONTACTO"));
-        objTipoNovedad.add(new TipoNovedadEntidad("117","117-EL CONTACTO O RESPONSABLE NO SE ENCUENTRA"));
-        objTipoNovedad.add(new TipoNovedadEntidad("118","118-NO TRABAJAN LOS SABADOS"));
-        objTipoNovedad.add(new TipoNovedadEntidad("119","119-CLIENTE DESPACHO POR OTRA TRANSPORTADORA"));
-        objTipoNovedad.add(new TipoNovedadEntidad("120","120-LA MERCANCIA NO CORRESPONDE  A LO AUTORIZADO"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("0","SELECCIONE UNO"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("34","34-RECOLECCION NO AUTORIZADA"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("53","52-DIRECCION DE RECOLECCION ERRADA"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("54","53-MERCANCIA NO ESTA LISTA"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("55","54-EL CLIENTE NO TIENE CONOCIMIENTO DE LA RECOLECCION"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("56","55-CUPO"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("57","56-DIFICIL MANIPULACION"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("58","57-NO TRANSPORTABLE"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("59","58-SE HACE AL DIA SIGUIENTE (ALMACEN DE CADENA)"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("60","59-PROBLEMA DE PROGRAMACION (OPERACIONES)"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("64","61-RECOLECCION EN RUTA REGIONAL"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("65","62-REMITENTE POSTERGA FECHA DE RECOLECCION"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("66","63-CERRADO LUGAR DE RECOLECCION"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("67","64-FALTA AUTORIZACION PARA RECOGER"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("68","65-NECESARIA LA PRESENCIA DEL REPRESENTANTE"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("69","66-NO ENTREGAN POR FALTA DE ORDEN DE CARGUE"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("63","76-RECOLECCION PROGRAMADA DESPUES DEL MEDIO DIA"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("109","109-VISITA FUERA DE HORARIO"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("110","110-FALTA DE TIEMPO PAR RECOGER"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("111","111-IMPREVISTO"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("112","112-MAL ESTADO DE LAS UNIDADES"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("113","113-NO HAY MERCANCIA"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("114","114-SE REQUIERE CITA PARA RECOGER"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("115","115-FALTA DE SOLICITUD O AUTORIZACIÓN"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("116","116-NO CONOCEN AL CONTACTO"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("117","117-EL CONTACTO O RESPONSABLE NO SE ENCUENTRA"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("118","118-NO TRABAJAN LOS SABADOS"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("119","119-CLIENTE DESPACHO POR OTRA TRANSPORTADORA"));
+        objArrayTipoNovedad.add(new TipoNovedadEntidad("120","120-LA MERCANCIA NO CORRESPONDE  A LO AUTORIZADO"));
 
-        tipoNovedadAdapter = new ArrayAdapter<TipoNovedadEntidad>(this, android.R.layout.simple_spinner_dropdown_item, objTipoNovedad);
-        spTipoNovedad.setAdapter(tipoNovedadAdapter);
+        adapterTipoNovedad = new ArrayAdapter<TipoNovedadEntidad>(this, android.R.layout.simple_spinner_dropdown_item, objArrayTipoNovedad);
+        spTipoNovedad.setAdapter(adapterTipoNovedad);
     }
 
     public void guardarAgregarNovedad()
     {
-        final String[] respuesta = new String[1];
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Grabando novedad...");
         progressDialog.show();
@@ -277,7 +273,7 @@ public class ListaOrdenCargue extends AppCompatActivity {
         requestParams.add("usuarioCodigo", sharedPref.getString("usuarioCodigo", ""));
         requestParams.add("cencosCodigo", sharedPref.getString("cencosCodigo", ""));
         requestParams.add("ordenCargue", tvOrdenCargueCodigo.getText().toString());
-        requestParams.add("tipnovCodigo", objTipoNovedad.get(spTipoNovedad.getSelectedItemPosition()).getTipoNovedadCodigo());
+        requestParams.add("tipnovCodigo", objArrayTipoNovedad.get(spTipoNovedad.getSelectedItemPosition()).getTipoNovedadCodigo());
         requestParams.add("observacion", etObservacion.getText().toString());
 
         cliente.post("http://181.48.247.202/redetransmovil/apps/gestionarRecoleccion/gestionarRecoleccion.php", requestParams, new JsonHttpResponseHandler() {

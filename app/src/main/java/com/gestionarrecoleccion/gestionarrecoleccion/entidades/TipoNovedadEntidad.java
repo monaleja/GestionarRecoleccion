@@ -1,4 +1,4 @@
-package com.gestionarrecoleccion.gestionarrecoleccion.modelos;
+package com.gestionarrecoleccion.gestionarrecoleccion.entidades;
 
 /**
  * Created by Alejandra on 02/12/2016.

@@ -1,10 +1,10 @@
-package com.gestionarrecoleccion.gestionarrecoleccion.modelos;
+package com.gestionarrecoleccion.gestionarrecoleccion.entidades;
 
 /**
  * Created by equipo47 on 6/12/16.
  */
 
-public class Remesa {
+public class RemesaEntidad {
 
     private String remesaCodigo;
     private String peso;
@@ -14,7 +14,7 @@ public class Remesa {
     private String regdesNombre;
     private String plarecCodigo;
 
-    public Remesa(String remesaCodigo, String peso, String cantidad, String ordcarCodigo, String regdesCodigo, String regdesNombre, String plarecCodigo) {
+    public RemesaEntidad(String remesaCodigo, String peso, String cantidad, String ordcarCodigo, String regdesCodigo, String regdesNombre, String plarecCodigo) {
 
         this.remesaCodigo = remesaCodigo;
         this.peso = peso;
@@ -25,7 +25,7 @@ public class Remesa {
         this.plarecCodigo = plarecCodigo;
     }
 
-    public Remesa(){
+    public RemesaEntidad(){
 
     }
 
@@ -87,7 +87,7 @@ public class Remesa {
 
     @Override
     public String toString() {
-        return "Remesa{" +
+        return "RemesaEntidad{" +
                 "remesaCodigo='" + remesaCodigo + '\'' +
                 ", peso='" + peso + '\'' +
                 ", cantidad='" + cantidad + '\'' +

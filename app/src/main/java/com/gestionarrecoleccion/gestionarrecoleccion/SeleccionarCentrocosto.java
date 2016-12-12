@@ -1,26 +1,17 @@
 package com.gestionarrecoleccion.gestionarrecoleccion;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.gestionarrecoleccion.gestionarrecoleccion.adapters.AdapterEmpresaUsuario;
-import com.gestionarrecoleccion.gestionarrecoleccion.modelos.EmpresaUsuario;
+import com.gestionarrecoleccion.gestionarrecoleccion.entidades.EmpresaUsuarioEntidad;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,17 +22,16 @@ import java.util.ArrayList;
 /**
  * Created by Alejandra on 27/11/2016.
  */
-public class SeleccionarEmpresa extends ActionBarActivity {
+public class SeleccionarCentrocosto extends ActionBarActivity {
 
     JSONArray empresasJson = new JSONArray();
-    ArrayList<EmpresaUsuario> empresas = new ArrayList<EmpresaUsuario>();
+    ArrayList<EmpresaUsuarioEntidad> empresas = new ArrayList<EmpresaUsuarioEntidad>();
     ListView lvEmpresas;
-    Dialog DialogAgregarNovedad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_seleccionar_empresa);
+        setContentView(R.layout.activity_seleccionar_centrocosto);
         Intent intent = getIntent();
 
         try {
@@ -55,7 +45,7 @@ public class SeleccionarEmpresa extends ActionBarActivity {
                 setEventoTapEmpresa();
             }else{
                 JSONObject empresa = empresasJson.getJSONObject(0);
-                EmpresaUsuario empresaUsuario = new EmpresaUsuario(
+                EmpresaUsuarioEntidad empresaUsuarioEntidad = new EmpresaUsuarioEntidad(
                         empresa.getString("usuario_codigo"),
                         empresa.getString("usuario_login"),
                         empresa.getString("empresa_codigo"),
@@ -63,8 +53,8 @@ public class SeleccionarEmpresa extends ActionBarActivity {
                         empresa.getString("cencos_codigo"),
                         empresa.getString("cencos_nombre"));
 
-                guardarDatosSesion(empresaUsuario);
-                goSeleccionarEmpresaToMenuAplicaciones(empresaUsuario);
+                guardarDatosSesion(empresaUsuarioEntidad);
+                goSeleccionarEmpresaToMenuAplicaciones(empresaUsuarioEntidad);
             }
 
         } catch (JSONException e) {
@@ -77,7 +67,7 @@ public class SeleccionarEmpresa extends ActionBarActivity {
         for (int i = 0; i < empresasJson.length(); i++) {
             try {
                 JSONObject empresa = empresasJson.getJSONObject(i);
-                empresas.add(new EmpresaUsuario(
+                empresas.add(new EmpresaUsuarioEntidad(
                         empresa.getString("usuario_codigo"),
                         empresa.getString("usuario_login"),
                         empresa.getString("empresa_codigo"),
@@ -94,30 +84,30 @@ public class SeleccionarEmpresa extends ActionBarActivity {
         lvEmpresas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final EmpresaUsuario empresa = (EmpresaUsuario) parent.getItemAtPosition(position);
+                final EmpresaUsuarioEntidad empresa = (EmpresaUsuarioEntidad) parent.getItemAtPosition(position);
                 guardarDatosSesion(empresa);
                 goSeleccionarEmpresaToMenuAplicaciones(empresa);
             }
         });
     }
 
-    public void guardarDatosSesion(EmpresaUsuario empresaUsuario)
+    public void guardarDatosSesion(EmpresaUsuarioEntidad empresaUsuarioEntidad)
     {
         SharedPreferences sharedPref = getSharedPreferences("DatosSesionRedetransMovil", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
 
-        editor.putString("usuarioCodigo", empresaUsuario.getUsuarioCodigo());
-        editor.putString("usuarioLogin", empresaUsuario.getUsuarioLogin());
-        editor.putString("empresaCodigo", empresaUsuario.getEmpresaCodigo());
-        editor.putString("empresaNombre", empresaUsuario.getEmpresaNombre());
-        editor.putString("cencosCodigo", empresaUsuario.getCencosCodigo());
-        editor.putString("cencosNombre", empresaUsuario.getCencosNombre());
+        editor.putString("usuarioCodigo", empresaUsuarioEntidad.getUsuarioCodigo());
+        editor.putString("usuarioLogin", empresaUsuarioEntidad.getUsuarioLogin());
+        editor.putString("empresaCodigo", empresaUsuarioEntidad.getEmpresaCodigo());
+        editor.putString("empresaNombre", empresaUsuarioEntidad.getEmpresaNombre());
+        editor.putString("cencosCodigo", empresaUsuarioEntidad.getCencosCodigo());
+        editor.putString("cencosNombre", empresaUsuarioEntidad.getCencosNombre());
         editor.commit();
     }
 
-    public void goSeleccionarEmpresaToMenuAplicaciones (EmpresaUsuario empresa){
+    public void goSeleccionarEmpresaToMenuAplicaciones (EmpresaUsuarioEntidad empresa){
 
-        Intent intent = new Intent(SeleccionarEmpresa.this, ListaOrdenCargue.class);
+        Intent intent = new Intent(SeleccionarCentrocosto.this, ListaOrdenCargue.class);
         intent.putExtra("usuarioLogin", empresa.getUsuarioLogin());
         intent.putExtra("usuarioCencos", empresa.getCencosNombre());
 

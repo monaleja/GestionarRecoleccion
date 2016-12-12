@@ -4,12 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.gestionarrecoleccion.gestionarrecoleccion.R;
-import com.gestionarrecoleccion.gestionarrecoleccion.modelos.EmpresaUsuario;
+import com.gestionarrecoleccion.gestionarrecoleccion.entidades.EmpresaUsuarioEntidad;
 
 import java.util.ArrayList;
 
@@ -19,9 +18,9 @@ import java.util.ArrayList;
 public class AdapterEmpresaUsuario extends BaseAdapter {
 
     private Context context;
-    private ArrayList<EmpresaUsuario> empresas;
+    private ArrayList<EmpresaUsuarioEntidad> empresas;
 
-    public AdapterEmpresaUsuario(Context context, ArrayList<EmpresaUsuario> empresas) {
+    public AdapterEmpresaUsuario(Context context, ArrayList<EmpresaUsuarioEntidad> empresas) {
         this.context = context;
         this.empresas = empresas;
     }
@@ -44,10 +43,10 @@ public class AdapterEmpresaUsuario extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if (view == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.listview_empresas, viewGroup, false);
+            view = LayoutInflater.from(context).inflate(R.layout.activity_lista_centrocosto, viewGroup, false);
         }
 
-        EmpresaUsuario empresaActual = (EmpresaUsuario) getItem(i);
+        EmpresaUsuarioEntidad empresaActual = (EmpresaUsuarioEntidad) getItem(i);
 
         TextView tvLvEmpresa = (TextView) view.findViewById(R.id.tvLvEmpresa);
         TextView tvLvCencos = (TextView) view.findViewById(R.id.tvLvCencos);

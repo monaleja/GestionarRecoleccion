@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,8 +20,8 @@ import android.widget.Toast;
 
 import com.gestionarrecoleccion.gestionarrecoleccion.adapters.AdapterListaRemesa;
 import com.gestionarrecoleccion.gestionarrecoleccion.config.ConfigurarCliente;
-import com.gestionarrecoleccion.gestionarrecoleccion.modelos.RegionalEntidad;
-import com.gestionarrecoleccion.gestionarrecoleccion.modelos.Remesa;
+import com.gestionarrecoleccion.gestionarrecoleccion.entidades.RegionalEntidad;
+import com.gestionarrecoleccion.gestionarrecoleccion.entidades.RemesaEntidad;
 import com.gestionarrecoleccion.gestionarrecoleccion.utils.RespuestaRest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -51,9 +50,9 @@ public class CumplirOrdenCargue extends AppCompatActivity {
     ImageView ivCerrarSesion;
     SharedPreferences sharedPref;
     ListView lvRemesas;
-    ArrayList<RegionalEntidad> objRegional = new ArrayList<RegionalEntidad>();
-    ArrayAdapter<RegionalEntidad> regionalAdapter;
-    ArrayList<Remesa> arrayRemesa;
+    ArrayList<RegionalEntidad> objArrayRegional = new ArrayList<RegionalEntidad>();
+    ArrayAdapter<RegionalEntidad> adapterRegional;
+    ArrayList<RemesaEntidad> objArrayRemesa;
     AdapterListaRemesa adapterlistaremesa;
     final CharSequence[] items = {"Eliminar detalle"};
 
@@ -94,27 +93,27 @@ public class CumplirOrdenCargue extends AppCompatActivity {
         spRegionalDestino = (Spinner) findViewById(R.id.spRegionalDestino);
         poblarRegional();
         plarecCodigo = intent.getStringExtra("planRecogidaCodigo");
-        arrayRemesa = new ArrayList<Remesa>();
+        objArrayRemesa = new ArrayList<RemesaEntidad>();
     }
 
     public void poblarRegional()
     {
-        objRegional.add(new RegionalEntidad("0","SELECCIONE UNO"));
-        objRegional.add(new RegionalEntidad("1","CENTRO"));
-        objRegional.add(new RegionalEntidad("2","ANTIOQUIA"));
-        objRegional.add(new RegionalEntidad("3","OCCIDENTE"));
-        objRegional.add(new RegionalEntidad("4","EJE CAFETERO"));
-        objRegional.add(new RegionalEntidad("5","SANTANDER SUR"));
-        objRegional.add(new RegionalEntidad("6","COSTA NORTE"));
-        objRegional.add(new RegionalEntidad("7","TOLIMA GRANDE"));
-        objRegional.add(new RegionalEntidad("8","COSTA BAJA PLANETA"));
-        objRegional.add(new RegionalEntidad("9","SANTANDER NORTE"));
-        objRegional.add(new RegionalEntidad("10","COSTA CARIBE"));
-        objRegional.add(new RegionalEntidad("13","COSTA MEDIA SINCELEJO"));
-        objRegional.add(new RegionalEntidad("25","NACIONAL PRINCIPAL"));
+        objArrayRegional.add(new RegionalEntidad("0","SELECCIONE UNO"));
+        objArrayRegional.add(new RegionalEntidad("1","CENTRO"));
+        objArrayRegional.add(new RegionalEntidad("2","ANTIOQUIA"));
+        objArrayRegional.add(new RegionalEntidad("3","OCCIDENTE"));
+        objArrayRegional.add(new RegionalEntidad("4","EJE CAFETERO"));
+        objArrayRegional.add(new RegionalEntidad("5","SANTANDER SUR"));
+        objArrayRegional.add(new RegionalEntidad("6","COSTA NORTE"));
+        objArrayRegional.add(new RegionalEntidad("7","TOLIMA GRANDE"));
+        objArrayRegional.add(new RegionalEntidad("8","COSTA BAJA PLANETA"));
+        objArrayRegional.add(new RegionalEntidad("9","SANTANDER NORTE"));
+        objArrayRegional.add(new RegionalEntidad("10","COSTA CARIBE"));
+        objArrayRegional.add(new RegionalEntidad("13","COSTA MEDIA SINCELEJO"));
+        objArrayRegional.add(new RegionalEntidad("25","NACIONAL PRINCIPAL"));
 
-        regionalAdapter = new ArrayAdapter<RegionalEntidad>(this, android.R.layout.simple_spinner_dropdown_item, objRegional);
-        spRegionalDestino.setAdapter(regionalAdapter);
+        adapterRegional = new ArrayAdapter<RegionalEntidad>(this, android.R.layout.simple_spinner_dropdown_item, objArrayRegional);
+        spRegionalDestino.setAdapter(adapterRegional);
     }
 
     public void escanearCodigoDeBarras(View view)
@@ -129,7 +128,7 @@ public class CumplirOrdenCargue extends AppCompatActivity {
 
         if(validacionCamposDetalle(view)) {
             if(validacionRemesaDetalle(view)){
-                arrayRemesa.add(new Remesa(
+                objArrayRemesa.add(new RemesaEntidad(
                         etRemesa.getText().toString(),
                         etPeso.getText().toString(),
                         etCantidad.getText().toString(),
@@ -139,7 +138,7 @@ public class CumplirOrdenCargue extends AppCompatActivity {
                         plarecCodigo
                 ));
 
-                adapterlistaremesa = new AdapterListaRemesa(CumplirOrdenCargue.this, arrayRemesa);
+                adapterlistaremesa = new AdapterListaRemesa(CumplirOrdenCargue.this, objArrayRemesa);
                 lvRemesas = (ListView) findViewById(R.id.lvRemesas);
                 lvRemesas.setAdapter(adapterlistaremesa);
                 setEventoTapDetalle();
@@ -172,8 +171,8 @@ public class CumplirOrdenCargue extends AppCompatActivity {
     public boolean validacionRemesaDetalle(View view){
         Integer remesaContador = 0;
 
-        for (int i = 0; i < arrayRemesa.size(); i++) {
-            if(arrayRemesa.get(i).getRemesaCodigo().equals(etRemesa.getText().toString())){
+        for (int i = 0; i < objArrayRemesa.size(); i++) {
+            if(objArrayRemesa.get(i).getRemesaCodigo().equals(etRemesa.getText().toString())){
                 remesaContador++;
             }
         }
@@ -202,7 +201,7 @@ public class CumplirOrdenCargue extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if(items[which].toString().equals("Eliminar detalle")){
-                            arrayRemesa.remove(parent.getItemAtPosition(position));
+                            objArrayRemesa.remove(parent.getItemAtPosition(position));
                             adapterlistaremesa.notifyDataSetChanged();
                         }
                     }
@@ -215,7 +214,7 @@ public class CumplirOrdenCargue extends AppCompatActivity {
 
     public void guardarCumplido(View view)
     {
-        if(arrayRemesa.size() == 0){
+        if(objArrayRemesa.size() == 0){
             new AlertDialog.Builder(view.getContext())
                     .setTitle("Validación")
                     .setMessage("Debe diligenciar al menos un detalle para cumplir la orden de cargue.")
@@ -224,9 +223,7 @@ public class CumplirOrdenCargue extends AppCompatActivity {
                     .show();
         }else{
             Gson gson = new GsonBuilder().create();
-            JsonArray jsonArray = gson.toJsonTree(arrayRemesa).getAsJsonArray();
-            //Toast.makeText(view.getContext(), "array List -> "+jsonArray.toString(), Toast.LENGTH_LONG).show();
-            //Log.d("TEST", jsonArray.toString());
+            JsonArray jsonArray = gson.toJsonTree(objArrayRemesa).getAsJsonArray();
 
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setMessage("Cumpliendo orden cargue...");
@@ -239,7 +236,7 @@ public class CumplirOrdenCargue extends AppCompatActivity {
             requestParams.add("usuarioCodigo", sharedPref.getString("usuarioCodigo", ""));
             requestParams.add("cencosCodigo", sharedPref.getString("cencosCodigo", ""));
             requestParams.add("cadena", jsonArray.toString());
-            //Log.d("cadena ", jsonArray.toString());
+
             cliente.post("http://181.48.247.202/redetransmovil/apps/gestionarRecoleccion/gestionarRecoleccion.php", requestParams, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -259,7 +256,6 @@ public class CumplirOrdenCargue extends AppCompatActivity {
                 @Override
                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                     Toast.makeText(getApplicationContext(), responseString, Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getApplicationContext(), "onFailure", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override

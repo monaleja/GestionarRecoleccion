@@ -1,9 +1,9 @@
-package com.gestionarrecoleccion.gestionarrecoleccion.modelos;
+package com.gestionarrecoleccion.gestionarrecoleccion.entidades;
 
 /**
  * Created by Alejandra on 27/11/2016.
  */
-public class EmpresaUsuario {
+public class EmpresaUsuarioEntidad {
     public String usuarioCodigo;
     public String usuarioLogin;
 
@@ -13,7 +13,7 @@ public class EmpresaUsuario {
     public String cencosCodigo;
     public String cencosNombre;
 
-    public EmpresaUsuario(String usuarioCodigo, String usuarioLogin, String empresaCodigo, String empresaNombre, String cencosCodigo, String cencosNombre) {
+    public EmpresaUsuarioEntidad(String usuarioCodigo, String usuarioLogin, String empresaCodigo, String empresaNombre, String cencosCodigo, String cencosNombre) {
         this.usuarioCodigo = usuarioCodigo;
         this.usuarioLogin = usuarioLogin;
         this.empresaCodigo = empresaCodigo;

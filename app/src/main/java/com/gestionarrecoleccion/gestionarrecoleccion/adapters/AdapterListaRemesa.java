@@ -8,8 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.gestionarrecoleccion.gestionarrecoleccion.R;
-import com.gestionarrecoleccion.gestionarrecoleccion.modelos.OrdenCargueEntidad;
-import com.gestionarrecoleccion.gestionarrecoleccion.modelos.Remesa;
+import com.gestionarrecoleccion.gestionarrecoleccion.entidades.RemesaEntidad;
 
 import java.util.ArrayList;
 
@@ -20,21 +19,21 @@ import java.util.ArrayList;
 public class AdapterListaRemesa extends BaseAdapter {
 
     private Context context;
-    private ArrayList<Remesa> remesas;
+    private ArrayList<RemesaEntidad> remesaEntidad;
 
-    public AdapterListaRemesa(Context context, ArrayList<Remesa> remesa) {
+    public AdapterListaRemesa(Context context, ArrayList<RemesaEntidad> remesaEntidad) {
         this.context = context;
-        this.remesas = remesa;
+        this.remesaEntidad = remesaEntidad;
     }
 
     @Override
     public int getCount() {
-        return remesas.size();
+        return remesaEntidad.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return remesas.get(i);
+        return remesaEntidad.get(i);
     }
 
     @Override
@@ -49,17 +48,17 @@ public class AdapterListaRemesa extends BaseAdapter {
             view = LayoutInflater.from(context).inflate(R.layout.activity_list_row_remesa, viewGroup, false);
         }
 
-        Remesa remesa_actual = (Remesa) getItem(i);
+        RemesaEntidad remesaActual = (RemesaEntidad) getItem(i);
 
         TextView lvremesa_tvRemesa = (TextView)view.findViewById(R.id.lvremesa_tvRemesa);
         TextView lvremesa_tvpeso = (TextView)view.findViewById(R.id.lvremesa_tvpeso);
         TextView lvremesa_tvcantidad = (TextView)view.findViewById(R.id.lvremesa_tvcantidad);
         TextView lvremesa_tvregionaldestino = (TextView)view.findViewById(R.id.lvremesa_tvregionaldestino);
 
-        lvremesa_tvRemesa.setText(remesa_actual.getRemesaCodigo());
-        lvremesa_tvpeso.setText(""+remesa_actual.getPeso());
-        lvremesa_tvcantidad.setText(""+remesa_actual.getCantidad());
-        lvremesa_tvregionaldestino.setText(remesa_actual.getRegdesNombre());
+        lvremesa_tvRemesa.setText(remesaActual.getRemesaCodigo());
+        lvremesa_tvpeso.setText(""+ remesaActual.getPeso());
+        lvremesa_tvcantidad.setText(""+ remesaActual.getCantidad());
+        lvremesa_tvregionaldestino.setText(remesaActual.getRegdesNombre());
 
         return view;
     }

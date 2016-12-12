@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.gestionarrecoleccion.gestionarrecoleccion.R;
-import com.gestionarrecoleccion.gestionarrecoleccion.modelos.OrdenCargueEntidad;
+import com.gestionarrecoleccion.gestionarrecoleccion.entidades.OrdenCargueEntidad;
 
 import java.util.ArrayList;
 
@@ -19,21 +19,21 @@ import java.util.ArrayList;
 public class AdapterOrdenCargue extends BaseAdapter {
 
     private Context context;
-    private ArrayList<OrdenCargueEntidad> ordencargue;
+    private ArrayList<OrdenCargueEntidad> ordenCargueEntidad;
 
-    public AdapterOrdenCargue(Context context, ArrayList<OrdenCargueEntidad> ordencargue) {
+    public AdapterOrdenCargue(Context context, ArrayList<OrdenCargueEntidad> ordenCargueEntidad) {
         this.context = context;
-        this.ordencargue = ordencargue;
+        this.ordenCargueEntidad = ordenCargueEntidad;
     }
 
     @Override
     public int getCount() {
-        return ordencargue.size();
+        return ordenCargueEntidad.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return ordencargue.get(i);
+        return ordenCargueEntidad.get(i);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class AdapterOrdenCargue extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
 
         if (view == null){
-            view = LayoutInflater.from(context).inflate(R.layout.activity_list_row_orden_cargue, viewGroup, false);
+            view = LayoutInflater.from(context).inflate(R.layout.activity_list_row_ordencargue, viewGroup, false);
         }
 
         OrdenCargueEntidad ordenCargueActual= (OrdenCargueEntidad) getItem(i);

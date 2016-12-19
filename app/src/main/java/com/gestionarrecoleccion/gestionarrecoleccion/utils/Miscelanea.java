@@ -49,4 +49,15 @@ public class Miscelanea {
     {
         Toast.makeText(context, "La aplicación requiere de una conexión a internet, por favor verifique el estado de su red. Si tiene una red de datos móviles, verifique su disponibilidad.", Toast.LENGTH_LONG).show();
     }
+
+    public static boolean verificarInternet(final Activity activity) {
+        ConnectivityManager cm = (ConnectivityManager) activity.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+
+        if (!(activeNetwork != null && activeNetwork.isConnectedOrConnecting())) {
+            return false;
+        }else{
+            return true;
+        }
+    }
 }

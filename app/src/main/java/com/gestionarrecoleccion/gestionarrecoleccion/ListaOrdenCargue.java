@@ -23,10 +23,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gestionarrecoleccion.gestionarrecoleccion.adapters.AdapterOrdenCargue;
+import com.gestionarrecoleccion.gestionarrecoleccion.bd.GrabarNovedad;
 import com.gestionarrecoleccion.gestionarrecoleccion.config.ConfigurarCliente;
 import com.gestionarrecoleccion.gestionarrecoleccion.entidades.OrdenCargueEntidad;
 import com.gestionarrecoleccion.gestionarrecoleccion.entidades.Par;
 import com.gestionarrecoleccion.gestionarrecoleccion.entidades.TipoNovedadEntidad;
+import com.gestionarrecoleccion.gestionarrecoleccion.utils.Miscelanea;
 import com.gestionarrecoleccion.gestionarrecoleccion.utils.RespuestaRest;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -260,46 +262,58 @@ public class ListaOrdenCargue extends AppCompatActivity {
         spTipoNovedad.setAdapter(adapterTipoNovedad);
     }
 
-    public void guardarAgregarNovedad()
-    {
+    public void guardarAgregarNovedad() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Grabando novedad...");
         progressDialog.show();
 
-        AsyncHttpClient cliente = new ConfigurarCliente(new AsyncHttpClient(), getApplicationContext()).getCliente();
+        if (!Miscelanea.verificarInternet(this)){
+            Toast.makeText(getApplicationContext(),"SIN INTERNET",Toast.LENGTH_SHORT).show();
+            String usuarioCodigo = sharedPref.getString("usuarioCodigo", "");
+            String cencosCodigo = sharedPref.getString("cencosCodigo", "");
+            String ordenCargue = tvOrdenCargueCodigo.getText().toString();
+            String tipnovCodigo = objArrayTipoNovedad.get(spTipoNovedad.getSelectedItemPosition()).getTipoNovedadCodigo();
+            String observacion = etObservacion.getText().toString();
 
-        RequestParams requestParams = new RequestParams();
-        requestParams.add("accion","agregarNovedad");
-        requestParams.add("usuarioCodigo", sharedPref.getString("usuarioCodigo", ""));
-        requestParams.add("cencosCodigo", sharedPref.getString("cencosCodigo", ""));
-        requestParams.add("ordenCargue", tvOrdenCargueCodigo.getText().toString());
-        requestParams.add("tipnovCodigo", objArrayTipoNovedad.get(spTipoNovedad.getSelectedItemPosition()).getTipoNovedadCodigo());
-        requestParams.add("observacion", etObservacion.getText().toString());
+            GrabarNovedad grabarNovedad = new GrabarNovedad();
+            //grabarNovedad.crearNovedad(usuarioCodigo,cencosCodigo,ordenCargue,tipnovCodigo,observacion);
+            grabarNovedad.consultarNovedad();
+        }else{
+            AsyncHttpClient cliente = new ConfigurarCliente(new AsyncHttpClient(), getApplicationContext()).getCliente();
 
-        cliente.post("http://181.48.247.202/redetransmovil/apps/gestionarRecoleccion/gestionarRecoleccion.php", requestParams, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                RespuestaRest respuestaRest = new RespuestaRest(response);
+            RequestParams requestParams = new RequestParams();
+            requestParams.add("accion", "agregarNovedad");
+            requestParams.add("usuarioCodigo", sharedPref.getString("usuarioCodigo", ""));
+            requestParams.add("cencosCodigo", sharedPref.getString("cencosCodigo", ""));
+            requestParams.add("ordenCargue", tvOrdenCargueCodigo.getText().toString());
+            requestParams.add("tipnovCodigo", objArrayTipoNovedad.get(spTipoNovedad.getSelectedItemPosition()).getTipoNovedadCodigo());
+            requestParams.add("observacion", etObservacion.getText().toString());
 
-                if (respuestaRest.satisfactorio) {
-                    Toast.makeText(getApplicationContext(), respuestaRest.mensaje, Toast.LENGTH_SHORT).show();
-                    etObservacion.setText("");
-                    DialogAgregarNovedad.dismiss();
-                } else {
-                    Toast.makeText(getApplicationContext(), respuestaRest.mensaje, Toast.LENGTH_SHORT).show();
+            cliente.post("http://181.48.247.202/redetransmovil/apps/gestionarRecoleccion/gestionarRecoleccion.php", requestParams, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    RespuestaRest respuestaRest = new RespuestaRest(response);
+
+                    if (respuestaRest.satisfactorio) {
+                        Toast.makeText(getApplicationContext(), respuestaRest.mensaje, Toast.LENGTH_SHORT).show();
+                        etObservacion.setText("");
+                        DialogAgregarNovedad.dismiss();
+                    } else {
+                        Toast.makeText(getApplicationContext(), respuestaRest.mensaje, Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Toast.makeText(getApplicationContext(), responseString, Toast.LENGTH_SHORT).show();
-            }
+                @Override
+                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                    Toast.makeText(getApplicationContext(), responseString, Toast.LENGTH_SHORT).show();
+                }
 
-            @Override
-            public void onFinish() {
-                progressDialog.dismiss();
-            }
-        });
+                @Override
+                public void onFinish() {
+                    progressDialog.dismiss();
+                }
+            });
+        }
     }
 
     public void cerrarSesion(View view)

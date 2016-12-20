@@ -263,10 +263,6 @@ public class ListaOrdenCargue extends AppCompatActivity {
     }
 
     public void guardarAgregarNovedad() {
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Grabando novedad...");
-        progressDialog.show();
-
         if (!Miscelanea.verificarInternet(this)){
             Toast.makeText(getApplicationContext(),"SIN INTERNET",Toast.LENGTH_SHORT).show();
             String usuarioCodigo = sharedPref.getString("usuarioCodigo", "");
@@ -275,10 +271,19 @@ public class ListaOrdenCargue extends AppCompatActivity {
             String tipnovCodigo = objArrayTipoNovedad.get(spTipoNovedad.getSelectedItemPosition()).getTipoNovedadCodigo();
             String observacion = etObservacion.getText().toString();
 
-            GrabarNovedad grabarNovedad = new GrabarNovedad();
-            //grabarNovedad.crearNovedad(usuarioCodigo,cencosCodigo,ordenCargue,tipnovCodigo,observacion);
-            grabarNovedad.consultarNovedad();
+            if(tipnovCodigo.equals("") || observacion.equals("")){
+                Toast.makeText(getApplicationContext(),"Faltan campos por diligenciar.",Toast.LENGTH_SHORT).show();
+            }else {
+                GrabarNovedad grabarNovedad = new GrabarNovedad();
+                //grabarNovedad.crearNovedad(usuarioCodigo,cencosCodigo,ordenCargue,tipnovCodigo,observacion);
+                grabarNovedad.consultarNovedad();
+                //DialogAgregarNovedad.dismiss();
+            }
         }else{
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage("Grabando novedad...");
+            progressDialog.show();
+
             AsyncHttpClient cliente = new ConfigurarCliente(new AsyncHttpClient(), getApplicationContext()).getCliente();
 
             RequestParams requestParams = new RequestParams();

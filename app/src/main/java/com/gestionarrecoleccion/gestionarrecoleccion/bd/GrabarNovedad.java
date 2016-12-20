@@ -20,7 +20,7 @@ public class GrabarNovedad extends Activity {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_ordencargue);
+        //setContentView(R.layout.activity_lista_ordencargue);
         //crearNovedad();
         //consultarNovedad();
     }
@@ -61,6 +61,7 @@ public class GrabarNovedad extends Activity {
     {
         //Abrimos la base de datos 'BdRedetrans' en modo lectura
         TbItemnovedadordencargue BdRedetrans = new TbItemnovedadordencargue(this, "bd_redetrans", null, 2);
+        Toast.makeText(getApplicationContext(),"consultar novedad",Toast.LENGTH_SHORT).show();
         SQLiteDatabase bd = BdRedetrans.getReadableDatabase();
 
         //bd.execSQL("delete from tb_itemnovedadordencargue");

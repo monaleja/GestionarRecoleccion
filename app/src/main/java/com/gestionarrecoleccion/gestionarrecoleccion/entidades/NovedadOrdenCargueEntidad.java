@@ -4,6 +4,8 @@ import android.content.ContentValues;
 
 import com.gestionarrecoleccion.gestionarrecoleccion.bd.NovedadOrdenCargueEsquema;
 
+import java.util.UUID;
+
 /**
  * Created by Alejandra on 19/12/2016.
  */
@@ -19,8 +21,8 @@ public class NovedadOrdenCargueEntidad {
     String novedadUsuarioCodigo;
     String novedadSincronizado;
 
-    public NovedadOrdenCargueEntidad(String novedadCodigo, String ordenCargueCodigo, String novedadObservacion, String tipoNovedadCodigo, String novedadFechaCreacion, String novedadHoraCreacion, String novedadUsuarioCodigo, String novedadSincronizado) {
-        this.novedadCodigo = novedadCodigo;
+    public NovedadOrdenCargueEntidad(String ordenCargueCodigo, String novedadObservacion, String tipoNovedadCodigo, String novedadFechaCreacion, String novedadHoraCreacion, String novedadUsuarioCodigo, String novedadSincronizado)
+    {
         this.ordenCargueCodigo = ordenCargueCodigo;
         this.novedadObservacion = novedadObservacion;
         this.tipoNovedadCodigo = tipoNovedadCodigo;
@@ -96,7 +98,7 @@ public class NovedadOrdenCargueEntidad {
 
     public ContentValues toContentValues() {
         ContentValues values = new ContentValues();
-        values.put(NovedadOrdenCargueEsquema.NovedadOrdenCargue.novedadCodigo, novedadCodigo);
+        //values.put(NovedadOrdenCargueEsquema.NovedadOrdenCargue.novedadCodigo,  novedadCodigo);
         values.put(NovedadOrdenCargueEsquema.NovedadOrdenCargue.ordenCargueCodigo, ordenCargueCodigo);
         values.put(NovedadOrdenCargueEsquema.NovedadOrdenCargue.novedadObservacion, novedadObservacion);
         values.put(NovedadOrdenCargueEsquema.NovedadOrdenCargue.tipoNovedadCodigo, tipoNovedadCodigo);

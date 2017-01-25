@@ -2,8 +2,11 @@ package com.gestionarrecoleccion.gestionarrecoleccion.bd;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.gestionarrecoleccion.gestionarrecoleccion.entidades.NovedadOrdenCargueEntidad;
 
@@ -16,7 +19,7 @@ public class TbItemnovedadordencargue extends SQLiteOpenHelper{
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "bd_redetrans.db";
 
-    public TbItemnovedadordencargue(GrabarNovedad grabarNovedad, String bd_redetrans, Context context, int i) {
+    public TbItemnovedadordencargue(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -55,9 +58,47 @@ public class TbItemnovedadordencargue extends SQLiteOpenHelper{
     {
         SQLiteDatabase bd = getWritableDatabase();
 
-        return bd.insert(
+        bd.delete(NovedadOrdenCargueEsquema.NovedadOrdenCargue.tablaNombre,
+                NovedadOrdenCargueEsquema.NovedadOrdenCargue.novedadCodigo + "=" + 5,null);
+
+        long query =  bd.insert(
                 NovedadOrdenCargueEsquema.NovedadOrdenCargue.tablaNombre,
                 null,
                 novedadOrdenCargueEntidad.toContentValues());
+        return query;
+    }
+
+    public void consultarNovedad(Context context){
+        SQLiteDatabase bd = getReadableDatabase();
+        Cursor c = bd.rawQuery("select * from " + NovedadOrdenCargueEsquema.NovedadOrdenCargue.tablaNombre,null);
+
+        /*Cursor c = bd.query(
+                NovedadOrdenCargueEsquema.NovedadOrdenCargue.tablaNombre,  // Nombre de la tabla
+                null,  // Lista de Columnas a consultar
+                null,  // Columnas para la cláusula WHERE
+                null,  // Valores a comparar con las columnas del WHERE
+                null,  // Agrupar con GROUP BY
+                null,  // Condición HAVING para GROUP BY
+                null  // Cláusula ORDER BY
+        );*/
+
+        Log.d("Cantidad ", String.valueOf(c.getCount()));
+
+        while(c.moveToNext()){
+            //Toast.makeText(context,"Orden cargue: "+c.getString(1)+" Fecha: "+c.getString(4),Toast.LENGTH_SHORT).show();
+            Log.d("Codigo ",c.getString(0));
+            Log.d("Orden cargue ",c.getString(1));
+            Log.d("Observacion ",c.getString(2));
+            Log.d("Tipo novedad ",c.getString(3));
+            Log.d("Fecha ",c.getString(4));
+            Log.d("Hora ",c.getString(5));
+            Log.d("Usuario ",c.getString(6));
+            Log.d("Sincronizado ",c.getString(7));
+            Toast.makeText(context,"Si hay datos",Toast.LENGTH_SHORT).show();
+        }
+
+        if(c.getCount() == 0){
+            Toast.makeText(context,"No hay datos",Toast.LENGTH_SHORT).show();
+        }
     }
 }
